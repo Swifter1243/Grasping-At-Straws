@@ -74,12 +74,15 @@
                 float segment2 = cornerAngle * 4;
                 float segment3 = (i.localPos.x + 0.25) * 4;
 
+                const float edge1 = 0.3;
+                const float edge2 = 0.7;
+
                 bool inSegment1 = segment1 < 1;
                 bool inSegment3 = segment3 < 1;
                 
-                return inSegment1 ? segment1 / 3 // segment 1
-                : (inSegment3 ? 1 - (segment3)/3 // segment 3
-                : (segment2 + 1)/3); // segment 2
+                return inSegment1 ? lerp(0, edge1, segment1) // segment 1
+                : inSegment3 ? lerp(edge2, 1, 1 - segment3) // segment 3
+                : lerp(edge1, edge2, segment2); // segment 2
                 #else
                 return i.localPos.y + 0.5;
                 #endif
@@ -96,10 +99,15 @@
                 
                 float fluidPosition = _FlipFluid ? getFluidPosition(i) : 1 - getFluidPosition(i);
 
-                float waveAmount = smoothstep(0.5, 0.4, abs(_FluidProgress - 0.5));
-                float waveOffset = (i.localPos.z - 0.6) * 0.1;
-                float wave = sin(_Time.y * 3 + i.localPos.xz * 5);
-                waveOffset += (wave - 0.7) * 0.02;
+                float waveAmount = smoothstep(0.5, 0.2, abs(_FluidProgress - 0.5));
+                
+                #if CORNER
+                float waveAxis = i.localPos.y;
+                #else
+                float waveAxis = i.localPos.z;
+                #endif
+                float wave = sin(_Time.y * 3 + waveAxis * 20);
+                float waveOffset = wave * 0.03;
 
                 fluidPosition += waveOffset * waveAmount;
                 
@@ -108,7 +116,7 @@
 
                 float3 col = lerp(_Color, _WaterColor, waterAmount);
 
-                return float4(col * lighting, _Opacity);
+                return float4(col * lighting, max(_Opacity, waterAmount));
             }
             ENDCG
         }
