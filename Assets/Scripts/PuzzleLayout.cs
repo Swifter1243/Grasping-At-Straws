@@ -14,22 +14,16 @@ namespace SLC_GameJam_2025_1
         public PuzzleInput m_out;
         
         // Parsed
-        private PuzzlePiece[] m_internalPieces;
-    
-        public PuzzlePiece this[Vector3Int index] => m_internalPieces[Index3DTo1D(index)];
+        private Dictionary<Vector3Int, PuzzlePiece> m_internalPieces;
 
-        private int Index3DTo1D(Vector3Int index)
-        {
-            int linearIndex = index.x + index.y * m_dimensions.x + index.z * m_dimensions.y;
-            return linearIndex;
-        }
+        private PuzzlePiece this[Vector3Int index] => m_internalPieces[index];
 
         public void Initialize()
         {
-            m_internalPieces = InitializePieces(m_unsafePieces).ToArray();
+            m_internalPieces = InitializePieces(m_unsafePieces).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
-        private IEnumerable<PuzzlePiece> InitializePieces(PuzzlePiece[] pieces)
+        private IEnumerable<KeyValuePair<Vector3Int, PuzzlePiece>> InitializePieces(PuzzlePiece[] pieces)
         {
             int intendedLength = m_dimensions.x * m_dimensions.y * m_dimensions.z;
 
@@ -46,7 +40,7 @@ namespace SLC_GameJam_2025_1
                     {
                         Vector3Int position = new(x, y, z);
                         PuzzlePiece piece = pieces.First(piece => piece.BoardPosition == position);
-                        yield return piece;
+                        yield return new KeyValuePair<Vector3Int, PuzzlePiece>(position, piece);
                     }
                 }
             }
