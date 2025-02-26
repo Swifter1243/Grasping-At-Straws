@@ -66,7 +66,7 @@
 
                 float3 reflection = reflect(i.viewDir, i.normal);
                 float specularD = dot(reflection, SUN_DIRECTION);
-                lighting += pow(max(0, specularD), 4) * 3;
+                lighting += pow(max(0, specularD), 4) * 1;
 
                 float z = i.localPos.y * 0.5 - 0.5;
                 float y = z + (i.localPos.z - 0.6) * 0.1;
