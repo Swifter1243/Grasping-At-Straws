@@ -5,7 +5,7 @@
         [Toggle(CORNER)] _IsCorner ("Is Corner", Int) = 0
         _Color ("Color", Color) = (1, 1, 1)
         _WaterColor ("Water Color", Color) = (1, 1, 1)
-        _Progress ("Progress", Range(0, 1)) = 0
+        _FluidProgress ("Fluid Progress", Range(0, 1)) = 0
         _Opacity ("Opacity", Range(0,1)) = 1
     }
     SubShader
@@ -43,7 +43,7 @@
 
             float3 _Color;
             float3 _WaterColor;
-            float _Progress;
+            float _FluidProgress;
             float _Opacity;
 
             v2f vert(appdata v)
@@ -93,12 +93,16 @@
                 lighting += pow(max(0, specularD), 4) * 1;
 
                 float fluidPosition = getFluidPosition(i);
-                fluidPosition += (i.localPos.z - 0.6) * 0.1;
+
+                float waveAmount = smoothstep(0.5, 0.4, abs(_FluidProgress - 0.5));
+                float waveOffset = (i.localPos.z - 0.6) * 0.1;
                 float wave = sin(_Time.y * 3 + i.localPos.xz * 5);
-                fluidPosition += (wave - 0.7) * 0.02;
+                waveOffset += (wave - 0.7) * 0.02;
+
+                fluidPosition += waveOffset * waveAmount;
                 
-                float p = fluidPosition - 1 + _Progress * 1.2;
-                float waterAmount = smoothstep(0, 0.01, p);
+                float p = _FluidProgress - fluidPosition;
+                float waterAmount = step(0, p);
 
                 float3 col = lerp(_Color, _WaterColor, waterAmount);
 

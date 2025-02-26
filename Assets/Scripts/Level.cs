@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace SLC_GameJam_2025_1
@@ -7,6 +8,9 @@ namespace SLC_GameJam_2025_1
     {
         public PuzzleLayout m_puzzleLayout;
         public ParticleSystem m_leakParticles;
+
+        private bool m_solving = false;
+        private float m_pipeProgress = 0;
 
         private void RestartLevel()
         {
@@ -24,13 +28,44 @@ namespace SLC_GameJam_2025_1
         private void AttemptSolve()
         {
             PuzzleSolution solution = m_puzzleLayout.Solve();
-
+            m_solving = true;
+            
             if (solution.m_first == null)
             {
                 PlaceLeak(m_puzzleLayout.m_in.BoardPosition, m_puzzleLayout.m_in.BoardDirection);
             }
             else
             {
+                ProcessNextEntry(solution, solution.m_first);
+            }
+        }
+
+        private IEnumerator AnimatePipe(PuzzleSolution solution, PuzzleSolution.Entry entry)
+        {
+            m_pipeProgress = 0;
+            
+            while (true)
+            {
+                m_pipeProgress += Time.deltaTime;
+                entry.m_piece.SetFluidProgress(m_pipeProgress);
+
+                if (m_pipeProgress >= 1f)
+                {
+                    entry.m_piece.SetFluidProgress(m_pipeProgress);
+                    ProcessNextEntry(solution, entry.m_next);
+                    break;
+                }
+
+                yield return null;
+            }
+        }
+
+        private void ProcessNextEntry(PuzzleSolution solution, PuzzleSolution.Entry nextEntry)
+        {
+            if (nextEntry == null)
+            {
+                m_solving = false;
+                
                 if (solution.m_success)
                 {
                     Debug.Log("Success!");
@@ -39,6 +74,10 @@ namespace SLC_GameJam_2025_1
                 {
                     PlaceLeak(solution.m_last.m_piece.BoardPosition, solution.m_last.m_directionOut);
                 }
+            }
+            else
+            {
+                StartCoroutine(AnimatePipe(solution, nextEntry));
             }
         }
 

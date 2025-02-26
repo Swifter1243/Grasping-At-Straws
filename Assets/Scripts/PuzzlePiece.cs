@@ -7,14 +7,23 @@ namespace SLC_GameJam_2025_1
     {
         public Transform m_input1;
         public Transform m_input2;
+        public MeshRenderer m_meshRenderer;
 
         private readonly static Color s_input1Color = new(0, 0.5f, 0.4f);
         private readonly static Color s_input2Color = new(1, 0.4f, 0);
+        private readonly static int s_fluidProgress = Shader.PropertyToID("_FluidProgress");
 
         private void OnDrawGizmos()
         {
             Debug.DrawLine(transform.position, transform.position + Input1DirectionOut, s_input1Color);
             Debug.DrawLine(transform.position, transform.position + Input2DirectionOut, s_input2Color);
+        }
+
+        public void SetFluidProgress(float fluidProgress)
+        {
+            MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+            materialPropertyBlock.SetFloat(s_fluidProgress, fluidProgress);
+            m_meshRenderer.SetPropertyBlock(materialPropertyBlock);
         }
 
         public Vector3Int Input1DirectionOut => GetChildBoardDirection(m_input1);
