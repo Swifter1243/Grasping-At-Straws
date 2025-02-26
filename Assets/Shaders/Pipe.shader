@@ -115,8 +115,8 @@
 
                 fluidPosition += waveOffset * waveAmount;
                 
-                float p = _FluidProgress - fluidPosition;
-                float waterAmount = step(0, p);
+                float p = _FluidProgress * 1.01 - fluidPosition;
+                float waterAmount = step(0.01, p);
 
                 float3 col = lerp(_Color, _WaterColor, waterAmount);
 
