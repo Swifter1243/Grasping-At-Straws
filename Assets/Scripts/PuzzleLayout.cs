@@ -22,12 +22,12 @@ namespace SLC_GameJam_2025_1
         {
             m_internalPieces = InitializePieces(m_unsafePieces).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
+        
+        private int Volume => m_dimensions.x * m_dimensions.y * m_dimensions.z;
 
         private IEnumerable<KeyValuePair<Vector3Int, PuzzlePiece>> InitializePieces(PuzzlePiece[] pieces)
         {
-            int intendedLength = m_dimensions.x * m_dimensions.y * m_dimensions.z;
-
-            if (intendedLength != pieces.Length)
+            if (pieces.Length != Volume)
             {
                 throw new Exception("Missing or excessive pieces when initializing PuzzleLayout.");
             }
@@ -54,21 +54,24 @@ namespace SLC_GameJam_2025_1
             Vector3Int searchDirection = m_in.BoardDirection;
             PuzzleSolution.Entry last = new();
 
-            while (true)
+            int maxIterations = Volume + 2;
+            for (int i = 0; i < maxIterations; i++)
             {
                 PuzzleObject puzzleObject = GetObjectFromDirection(searchPoint, searchDirection);
 
                 if (puzzleObject == null)
                 {
+                    solution.m_success = false;
                     break;
                 }
 
-                switch (puzzleObject)
+                if (puzzleObject is PuzzleInput)
                 {
-                case PuzzleInput:
                     solution.m_success = true;
                     break;
-                case PuzzlePiece puzzlePiece:
+                }
+
+                if (puzzleObject is PuzzlePiece puzzlePiece)
                 {
                     searchDirection = puzzlePiece.GetDirectionOut(searchDirection, out bool enteredInput1);
                     searchPoint = puzzlePiece.BoardPosition;
@@ -84,9 +87,11 @@ namespace SLC_GameJam_2025_1
 
                     solution.m_first ??= entry;
                     solution.m_last = entry;
-                    
-                    break;
                 }
+
+                if (i == maxIterations - 1)
+                {
+                    Debug.LogError("Solution was never solved. Something went wrong.");
                 }
             }
 
