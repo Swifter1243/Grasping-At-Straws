@@ -36,7 +36,7 @@ namespace SLC_GameJam_2025_1
             
             if (solution.m_first == null)
             {
-                PlaceLeak(m_puzzleLayout.m_in.BoardPosition, m_puzzleLayout.m_in.BoardDirection);
+                OnSolveFailure(m_puzzleLayout.m_in.BoardPosition, m_puzzleLayout.m_in.BoardDirection);
             }
             else
             {
@@ -77,17 +77,27 @@ namespace SLC_GameJam_2025_1
                 
                 if (solution.m_success)
                 {
-                    Debug.Log("Success!");
+                    OnSolveSuccess();
                 }
                 else
                 {
-                    PlaceLeak(solution.m_last.m_piece.BoardPosition, solution.m_last.m_directionOut);
+                    OnSolveFailure(solution.m_last.m_piece.BoardPosition, solution.m_last.m_directionOut);
                 }
             }
             else
             {
                 StartCoroutine(AnimatePipe(solution, nextEntry));
             }
+        }
+
+        private void OnSolveSuccess()
+        {
+            
+        }
+
+        private void OnSolveFailure(Vector3Int position, Vector3Int direction)
+        {
+            PlaceLeak(position, direction);
         }
 
         private void PlaceLeak(Vector3Int position, Vector3Int direction)
