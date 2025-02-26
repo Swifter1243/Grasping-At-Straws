@@ -43,15 +43,17 @@ namespace SLC_GameJam_2025_1
         private IEnumerator AnimatePipe(PuzzleSolution solution, PuzzleSolution.Entry entry)
         {
             m_pipeProgress = 0;
+            PuzzlePiece piece = entry.m_piece;
+            piece.SetFluidFlipped(entry.m_enteredInput1);
             
             while (true)
             {
-                m_pipeProgress += Time.deltaTime;
-                entry.m_piece.SetFluidProgress(m_pipeProgress);
+                m_pipeProgress += Time.deltaTime * 0.6f;
+                piece.SetFluidProgress(m_pipeProgress);
 
                 if (m_pipeProgress >= 1f)
                 {
-                    entry.m_piece.SetFluidProgress(m_pipeProgress);
+                    piece.SetFluidProgress(m_pipeProgress);
                     ProcessNextEntry(solution, entry.m_next);
                     break;
                 }

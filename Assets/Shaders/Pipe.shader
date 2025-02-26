@@ -3,6 +3,7 @@
     Properties
     {
         [Toggle(CORNER)] _IsCorner ("Is Corner", Int) = 0
+        [ToggleUI] _FlipFluid ("Flip Fluid", Int) = 0
         _Color ("Color", Color) = (1, 1, 1)
         _WaterColor ("Water Color", Color) = (1, 1, 1)
         _FluidProgress ("Fluid Progress", Range(0, 1)) = 0
@@ -45,6 +46,7 @@
             float3 _WaterColor;
             float _FluidProgress;
             float _Opacity;
+            bool _FlipFluid;
 
             v2f vert(appdata v)
             {
@@ -91,8 +93,8 @@
                 float3 reflection = reflect(i.viewDir, i.normal);
                 float specularD = dot(reflection, SUN_DIRECTION);
                 lighting += pow(max(0, specularD), 4) * 1;
-
-                float fluidPosition = getFluidPosition(i);
+                
+                float fluidPosition = _FlipFluid ? getFluidPosition(i) : 1 - getFluidPosition(i);
 
                 float waveAmount = smoothstep(0.5, 0.4, abs(_FluidProgress - 0.5));
                 float waveOffset = (i.localPos.z - 0.6) * 0.1;
