@@ -128,7 +128,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: b901ba12e21ae6b4aa6d865f1cc2004f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4dd0d6d2aea9cec478daeed6218d63e8, type: 2}
+      objectReference: {fileID: 2100000, guid: 6bb1afe6ff80b8f458fb28322aeb8322, type: 2}
     - target: {fileID: 919132149155446097, guid: b901ba12e21ae6b4aa6d865f1cc2004f, type: 3}
       propertyPath: m_Name
       value: pipe corner

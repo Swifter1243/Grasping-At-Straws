@@ -2,6 +2,7 @@
 {
     Properties
     {
+        [Toggle(CORNER)] _IsCorner ("Is Corner", Int) = 0
         _Color ("Color", Color) = (1, 1, 1)
         _WaterColor ("Water Color", Color) = (1, 1, 1)
         _Progress ("Progress", Range(0, 1)) = 0
@@ -14,7 +15,7 @@
             "RenderType"="Transparent"
             "Queue"="Transparent"
         }
-        Blend SrcAlpha OneMinusSrcAlpha
+        //Blend SrcAlpha OneMinusSrcAlpha
         Cull Off
 
         Pass
@@ -22,6 +23,7 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma shader_feature CORNER
 
             #include "UnityCG.cginc"
 
@@ -59,6 +61,28 @@
 
             #define SUN_DIRECTION float3(0, 1, 0)
 
+            float getFluidPosition(v2f i)
+            {
+                #if CORNER
+                float cornerAngle = atan2(i.localPos.z, i.localPos.x);
+                cornerAngle /= UNITY_PI * 2;
+                cornerAngle = (cornerAngle + 1) % 1;
+
+                float segment1 = (i.localPos.z + 0.25) * 4;
+                float segment2 = cornerAngle * 4;
+                float segment3 = (i.localPos.x + 0.25) * 4;
+
+                bool inSegment1 = segment1 < 1;
+                bool inSegment3 = segment3 < 1;
+                
+                return inSegment1 ? segment1 / 3 // segment 1
+                : (inSegment3 ? 1 - (segment3)/3 // segment 3
+                : (segment2 + 1)/3); // segment 2
+                #else
+                return i.localPos.y + 0.5;
+                #endif
+            }
+
             fixed4 frag(v2f i) : SV_Target
             {
                 float sunD = dot(i.normal, SUN_DIRECTION);
@@ -68,13 +92,12 @@
                 float specularD = dot(reflection, SUN_DIRECTION);
                 lighting += pow(max(0, specularD), 4) * 1;
 
-                float z = i.localPos.y * 0.5 - 0.5;
-                float y = z + (i.localPos.z - 0.6) * 0.1;
-
-                float distortion = sin(_Time.y * 3 + i.localPos.xz * 5);
+                float fluidPosition = getFluidPosition(i);
+                fluidPosition += (i.localPos.z - 0.6) * 0.1;
+                float wave = sin(_Time.y * 3 + i.localPos.xz * 5);
+                fluidPosition += (wave - 0.7) * 0.02;
                 
-                y += (distortion - 0.7) * 0.02;
-                float p = y + _Progress * 1.2;
+                float p = fluidPosition - 1 + _Progress * 1.2;
                 float waterAmount = smoothstep(0, 0.01, p);
 
                 float3 col = lerp(_Color, _WaterColor, waterAmount);
