@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SLC_GameJam_2025_1
 {
@@ -10,6 +11,8 @@ namespace SLC_GameJam_2025_1
         public ParticleSystem m_leakParticles;
         public CameraSmoothing m_cameraSmoothing;
         public ObjectVisibilityList m_uiLayouts;
+        public Slider m_playbackSpeedSlider;
+        private float m_playbackSpeed = 0.6f;
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
@@ -48,6 +51,7 @@ namespace SLC_GameJam_2025_1
         public void StartEditing()
         {
             m_state = State.Editing;
+            m_uiLayouts.Initialize();
             m_uiLayouts.SetVisible("Editor UI");
             m_leakParticles.gameObject.SetActive(false);
             
@@ -60,9 +64,16 @@ namespace SLC_GameJam_2025_1
 
         private void Awake()
         {
+            m_playbackSpeedSlider.value = m_playbackSpeed;
+            m_playbackSpeedSlider.onValueChanged.AddListener(UpdatePlaybackSpeed);
             m_puzzleLayout.Initialize();
             StartEditing();
             ResetView();
+        }
+
+        private void UpdatePlaybackSpeed(float playbackSpeed)
+        {
+            m_playbackSpeed = playbackSpeed;
         }
 
         private void ResetView()
@@ -128,7 +139,7 @@ namespace SLC_GameJam_2025_1
 
             while (true)
             {
-                m_pipeProgress += Time.deltaTime * 0.6f;
+                m_pipeProgress += Time.deltaTime * m_playbackSpeed;
                 piece.SetFluidProgress(m_pipeProgress);
 
                 float opacity = Mathf.Lerp(UNFOCUSED_OPACITY, FOCUSED_OPACITY, Math.Min(1, m_pipeProgress * 4));

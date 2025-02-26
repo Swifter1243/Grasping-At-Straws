@@ -10,8 +10,8 @@ namespace SLC_GameJam_2025_1
         public List<RectTransform> m_objects = new();
         private string m_lastObjectName;
         private readonly Dictionary<string, RectTransform> m_hashedObjects = new();
-        
-        private void Awake()
+
+        public void Initialize()
         {
             m_lastObjectName = m_objects[0].name;
             foreach (RectTransform rectTransform in m_objects)
