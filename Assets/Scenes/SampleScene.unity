@@ -714,7 +714,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_initialRotation: {x: 30, y: 30, z: 0}
-  m_smoothRate: 6
+  m_smoothRate: 10
+  m_lookSensitivity: 50
+  m_scrollSensitivity: 0.6
   m_targetDistance: 3
   m_targetPivot: {x: 0, y: 0, z: 0}
 --- !u!1001 &1049625475
