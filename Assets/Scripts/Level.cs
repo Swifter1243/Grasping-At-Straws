@@ -31,7 +31,11 @@ namespace SLC_GameJam_2025_1
             }
             else
             {
-                if (!solution.m_success)
+                if (solution.m_success)
+                {
+                    Debug.Log("Success!");
+                }
+                else
                 {
                     PlaceLeak(solution.m_last.m_piece.BoardPosition, solution.m_last.m_directionOut);
                 }
