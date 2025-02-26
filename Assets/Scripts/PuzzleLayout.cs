@@ -5,12 +5,14 @@ using UnityEngine;
 
 namespace SLC_GameJam_2025_1
 {
-    public class PuzzleLayout
+    public class PuzzleLayout : MonoBehaviour
     {
-        private Vector3Int m_dimensions;
-        private PuzzlePiece[] m_pieces;
+        public Vector3Int m_dimensions;
+        public PuzzlePiece[] m_unsafePieces;
+        
+        private PuzzlePiece[] m_internalPieces;
     
-        public PuzzlePiece this[Vector3Int index] => m_pieces[Index3DTo1D(index)];
+        public PuzzlePiece this[Vector3Int index] => m_internalPieces[Index3DTo1D(index)];
 
         private int Index3DTo1D(Vector3Int index)
         {
@@ -18,10 +20,14 @@ namespace SLC_GameJam_2025_1
             return linearIndex;
         }
 
-        public void Initialize(Vector3Int dimensions, PuzzlePiece[] pieces)
+        private void Awake()
         {
-            m_dimensions = dimensions;
-            m_pieces = InitializePieces(pieces).ToArray();
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            m_internalPieces = InitializePieces(m_unsafePieces).ToArray();
         }
 
         private IEnumerable<PuzzlePiece> InitializePieces(PuzzlePiece[] pieces)
