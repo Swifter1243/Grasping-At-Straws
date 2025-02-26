@@ -9,6 +9,9 @@ namespace SLC_GameJam_2025_1
         public PuzzleLayout m_puzzleLayout;
         public ParticleSystem m_leakParticles;
 
+        private const float FOCUSED_OPACITY = 1;
+        private const float UNFOCUSED_OPACITY = 0.2f;
+        
         private bool m_solving = false;
         private float m_pipeProgress = 0;
 
@@ -29,6 +32,7 @@ namespace SLC_GameJam_2025_1
         {
             PuzzleSolution solution = m_puzzleLayout.Solve();
             m_solving = true;
+            m_puzzleLayout.SetAllPipesOpacity(UNFOCUSED_OPACITY);
             
             if (solution.m_first == null)
             {
@@ -50,6 +54,9 @@ namespace SLC_GameJam_2025_1
             {
                 m_pipeProgress += Time.deltaTime * 0.6f;
                 piece.SetFluidProgress(m_pipeProgress);
+
+                float opacity = Mathf.Lerp(UNFOCUSED_OPACITY, FOCUSED_OPACITY, Math.Min(1, m_pipeProgress * 4));
+                piece.SetOpacity(opacity);
 
                 if (m_pipeProgress >= 1f)
                 {

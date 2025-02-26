@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace SLC_GameJam_2025_1
 {
-    public class PuzzleLayout : MonoBehaviour
+    public class PuzzleLayout : MonoBehaviour, IEnumerable<PuzzlePiece>
     {
         // Inspector
         public Vector3Int m_dimensions;
@@ -21,6 +22,14 @@ namespace SLC_GameJam_2025_1
         public void Initialize()
         {
             m_internalPieces = InitializePieces(m_unsafePieces).ToDictionary(pair => pair.Key, pair => pair.Value);
+        }
+
+        public void SetAllPipesOpacity(float opacity)
+        {
+            foreach (PuzzlePiece puzzlePiece in this)
+            {
+                puzzlePiece.SetOpacity(opacity);
+            }
         }
         
         private int Volume => m_dimensions.x * m_dimensions.y * m_dimensions.z;
@@ -127,5 +136,8 @@ namespace SLC_GameJam_2025_1
         {
             Gizmos.DrawWireCube(BoundingBox.center, BoundingBox.size);
         }
+
+        public IEnumerator<PuzzlePiece> GetEnumerator() => m_internalPieces.Values.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }   
 }

@@ -16,7 +16,7 @@
             "RenderType"="Transparent"
             "Queue"="Transparent"
         }
-        //Blend SrcAlpha OneMinusSrcAlpha
+        Blend SrcAlpha OneMinusSrcAlpha
         Cull Off
 
         Pass
@@ -61,7 +61,7 @@
                 return o;
             }
 
-            #define SUN_DIRECTION float3(0, 1, 0)
+            #define SUN_DIRECTION float3(0, 0.980581, 0.196116)
 
             float getFluidPosition(v2f i)
             {

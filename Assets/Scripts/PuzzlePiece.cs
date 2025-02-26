@@ -13,6 +13,7 @@ namespace SLC_GameJam_2025_1
         private readonly static Color s_input2Color = new(1, 0.4f, 0);
         private readonly static int s_fluidProgress = Shader.PropertyToID("_FluidProgress");
         private readonly static int s_flipFluid = Shader.PropertyToID("_FlipFluid");
+        private readonly static int s_opacity = Shader.PropertyToID("_Opacity");
 
         private void OnDrawGizmos()
         {
@@ -30,6 +31,11 @@ namespace SLC_GameJam_2025_1
             m_meshRenderer.material.SetInt(s_flipFluid, fluidFlipped ? 1 : 0);
         }
 
+        public void SetOpacity(float opacity)
+        {
+            m_meshRenderer.material.SetFloat(s_opacity, opacity);
+        }
+        
         public Vector3Int Input1DirectionOut => GetChildBoardDirection(m_input1);
         public Vector3Int Input1DirectionIn => GetChildBoardDirection(m_input1) * -1;
         public Vector3Int Input2DirectionOut => GetChildBoardDirection(m_input2);
