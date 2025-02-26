@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ae1c4b2f924f029b69c951a132e226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_in: {fileID: 3579039710037931213}
-  m_out: {fileID: 5720276404072968616}
+  m_input1: {fileID: 3579039710037931213}
+  m_input2: {fileID: 5720276404072968616}
 --- !u!1 &3287881548271924814
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +58,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5720276404072968616}
   m_Layer: 0
-  m_Name: Out
+  m_Name: Input 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3579039710037931213}
   m_Layer: 0
-  m_Name: In
+  m_Name: Input 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
