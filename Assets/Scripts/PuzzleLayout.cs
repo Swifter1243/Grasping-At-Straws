@@ -7,9 +7,13 @@ namespace SLC_GameJam_2025_1
 {
     public class PuzzleLayout : MonoBehaviour
     {
+        // Inspector
         public Vector3Int m_dimensions;
         public PuzzlePiece[] m_unsafePieces;
+        public PuzzleInput m_in;
+        public PuzzleInput m_out;
         
+        // Parsed
         private PuzzlePiece[] m_internalPieces;
     
         public PuzzlePiece this[Vector3Int index] => m_internalPieces[Index3DTo1D(index)];
@@ -46,7 +50,7 @@ namespace SLC_GameJam_2025_1
                     for (int z = 0; z < m_dimensions.z; z++)
                     {
                         Vector3Int position = new(x, y, z);
-                        PuzzlePiece piece = pieces.First(piece => piece.GetPiecePosition() == position);
+                        PuzzlePiece piece = pieces.First(piece => piece.BoardPosition == position);
                         yield return piece;
                     }
                 }
