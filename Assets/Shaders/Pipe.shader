@@ -40,7 +40,7 @@
             {
                 float3 normal : TEXCOORD0;
                 float3 localPos : TEXCOORD1;
-                float3 viewDir : TEXCOORD2;
+                float3 reflection : TEXCOORD2;
                 float4 vertex : SV_POSITION;
             };
 
@@ -59,7 +59,9 @@
 
                 float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
                 float3 viewVector = worldPos - _WorldSpaceCameraPos;
-                o.viewDir = normalize(viewVector);
+                float3 viewDir = normalize(viewVector);
+                float3 reflection = reflect(viewDir, o.normal);
+                o.reflection = reflection;
                 return o;
             }
 
@@ -94,10 +96,10 @@
             {
                 float sunD = dot(i.normal, SUN_DIRECTION);
                 float lighting = sunD * 0.5 + 0.5;
-
-                float3 reflection = reflect(i.viewDir, i.normal);
-                float specularD = dot(reflection, SUN_DIRECTION);
-                lighting += pow(max(0, specularD), 4) * 1;
+                
+                float specularD = dot(i.reflection, SUN_DIRECTION);
+                
+                lighting += pow(max(0.03, specularD * max(0, sunD)), 16) * 20;
                 
                 float fluidPosition = _FlipFluid ? getFluidPosition(i) : 1 - getFluidPosition(i);
 
