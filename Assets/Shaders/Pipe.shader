@@ -24,7 +24,6 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
-            #include "Noise.cginc"
 
             struct appdata
             {
