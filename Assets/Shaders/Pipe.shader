@@ -8,6 +8,7 @@
         _WaterColor ("Water Color", Color) = (1, 1, 1)
         _FluidProgress ("Fluid Progress", Range(0, 1)) = 0
         _Opacity ("Opacity", Range(0,1)) = 1
+        _OutlineColor ("Outline Color", Color) = (0,1,1,0)
     }
     SubShader
     {
@@ -17,10 +18,11 @@
             "Queue"="Transparent"
         }
         Blend SrcAlpha OneMinusSrcAlpha
-        Cull Off
 
         Pass
         {
+            Cull Off
+            
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -117,6 +119,47 @@
                 float3 col = lerp(_Color, _WaterColor, waterAmount);
 
                 return float4(col * lighting, max(_Opacity, waterAmount));
+            }
+            ENDCG
+        }
+        Pass
+        {
+            Cull Off
+            
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+
+            #include "UnityCG.cginc"
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float3 normal : NORMAL;
+            };
+
+            struct v2f
+            {
+                float4 vertex : SV_POSITION;
+            };
+
+            float4 _OutlineColor;
+
+            v2f vert(appdata v)
+            {
+                v2f o;
+                float pulse = sin(_Time.y * 3) * 0.5 + 0.5;
+                float3 localPos = v.vertex + v.normal * lerp(0.01, 0.02, pulse);
+                o.vertex = UnityObjectToClipPos(float4(localPos, v.vertex.w));
+                return o;
+            }
+
+            fixed4 frag(v2f i) : SV_Target
+            {
+                float4 col = _OutlineColor;
+                float pulse = sin(_Time.y * 4) * 0.5 + 0.5;
+                col.a *= pulse * 0.5 + 0.5;
+                return col;
             }
             ENDCG
         }

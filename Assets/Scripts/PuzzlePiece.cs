@@ -15,6 +15,7 @@ namespace SLC_GameJam_2025_1
         private readonly static int s_fluidProgress = Shader.PropertyToID("_FluidProgress");
         private readonly static int s_flipFluid = Shader.PropertyToID("_FlipFluid");
         private readonly static int s_opacity = Shader.PropertyToID("_Opacity");
+        private readonly static int s_outlineColor = Shader.PropertyToID("_OutlineColor");
 
         private void Awake()
         {
@@ -41,6 +42,11 @@ namespace SLC_GameJam_2025_1
         {
             m_meshRenderer.material.SetFloat(s_opacity, opacity);
         }
+
+        public void SetOutlineColor(Color outlineColor)
+        {
+            m_meshRenderer.material.SetColor(s_outlineColor, outlineColor);
+        }
         
         public Vector3Int Input1DirectionOut => GetChildBoardDirection(m_input1);
         public Vector3Int Input1DirectionIn => GetChildBoardDirection(m_input1) * -1;
@@ -62,11 +68,13 @@ namespace SLC_GameJam_2025_1
 
         public void Select()
         {
+            SetOutlineColor(new Color(0, 1, 1, 0.2f));
             m_collider.enabled = false;
         }
 
         public void Deselect()
         {
+            SetOutlineColor(new Color(0, 0, 0, 0));
             m_collider.enabled = true;
         }
     }
