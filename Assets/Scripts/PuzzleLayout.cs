@@ -24,6 +24,7 @@ namespace SLC_GameJam_2025_1
         }
         
         private int Volume => m_dimensions.x * m_dimensions.y * m_dimensions.z;
+        private Bounds BoundingBox => new(transform.position + (m_dimensions - Vector3.one) / 2f, m_dimensions);
 
         private IEnumerable<KeyValuePair<Vector3Int, PuzzlePiece>> InitializePieces(PuzzlePiece[] pieces)
         {
@@ -120,6 +121,11 @@ namespace SLC_GameJam_2025_1
             }
 
             return piece;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireCube(BoundingBox.center, BoundingBox.size);
         }
     }   
 }
