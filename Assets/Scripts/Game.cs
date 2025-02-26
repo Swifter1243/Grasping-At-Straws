@@ -8,6 +8,7 @@ namespace SLC_GameJam_2025_1
     {
         public PuzzleLayout m_puzzleLayout;
         public ParticleSystem m_leakParticles;
+        public CameraSmoothing m_cameraSmoothing;
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
@@ -18,21 +19,25 @@ namespace SLC_GameJam_2025_1
             Solving,
             ViewingResult
         }
-        
+
         public State m_state = State.Editing;
         private float m_pipeProgress = 0;
         private PuzzlePiece m_selectedPiece = null;
 
         public void SelectPiece(PuzzlePiece piece)
         {
+            DeselectPiece();
             piece.Select();
             m_selectedPiece = piece;
+            m_cameraSmoothing.m_targetPivot = piece.transform.position;
+            m_cameraSmoothing.m_targetDistance = 2;
         }
 
         public void DeselectPiece()
         {
             if (m_selectedPiece != null)
             {
+                ResetView();
                 m_selectedPiece.Deselect();
                 m_selectedPiece = null;
             }
@@ -47,6 +52,12 @@ namespace SLC_GameJam_2025_1
         {
             m_puzzleLayout.Initialize();
             ResetLevel();
+            ResetView();
+        }
+
+        private void ResetView()
+        {
+            m_cameraSmoothing.SetFromBounds(m_puzzleLayout.BoundingBox);
         }
 
         private void AttemptSolve()
@@ -55,7 +66,7 @@ namespace SLC_GameJam_2025_1
             PuzzleSolution solution = m_puzzleLayout.Solve();
             m_state = State.Solving;
             m_puzzleLayout.SetAllPipesOpacity(UNFOCUSED_OPACITY);
-            
+
             if (solution.m_first == null)
             {
                 OnSolveFailure(m_puzzleLayout.m_in.BoardPosition, m_puzzleLayout.m_in.BoardDirection);
@@ -71,7 +82,7 @@ namespace SLC_GameJam_2025_1
             m_pipeProgress = 0;
             PuzzlePiece piece = entry.m_piece;
             piece.SetFluidFlipped(entry.m_enteredInput1);
-            
+
             while (true)
             {
                 m_pipeProgress += Time.deltaTime * 0.6f;
@@ -96,7 +107,7 @@ namespace SLC_GameJam_2025_1
             if (nextEntry == null)
             {
                 m_state = State.ViewingResult;
-                
+
                 if (solution.m_success)
                 {
                     OnSolveSuccess();
@@ -124,7 +135,7 @@ namespace SLC_GameJam_2025_1
 
         private void PlaceLeak(Vector3Int position, Vector3Int direction)
         {
-            Vector3 pos = position + (Vector3)direction * 0.5f;
+            Vector3 pos = position + (Vector3) direction * 0.5f;
             m_leakParticles.transform.position = pos;
             m_leakParticles.transform.rotation = Quaternion.LookRotation(direction);
             m_leakParticles.gameObject.SetActive(true);
