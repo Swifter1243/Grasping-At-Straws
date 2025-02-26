@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace SLC_GameJam_2025_1
 {
-    public class Level : MonoBehaviour
+    public class Game : MonoBehaviour
     {
         public PuzzleLayout m_puzzleLayout;
         public ParticleSystem m_leakParticles;
