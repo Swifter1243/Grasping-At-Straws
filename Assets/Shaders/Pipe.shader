@@ -72,8 +72,7 @@
                 float z = i.localPos.y * 0.5 - 0.5;
                 float y = z + (i.localPos.z - 0.6) * 0.1;
 
-                float distortion = voronoi(float3(i.localPos.xz * 3, _Time.y * 2)) * 0.7;
-                distortion += sin(_Time.y * 3 + i.localPos.xz * 5);
+                float distortion = sin(_Time.y * 3 + i.localPos.xz * 5);
                 
                 y += (distortion - 0.7) * 0.02;
                 float p = y + _Progress * 1.2;
