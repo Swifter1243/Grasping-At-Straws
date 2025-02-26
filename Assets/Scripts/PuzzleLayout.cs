@@ -24,12 +24,7 @@ namespace SLC_GameJam_2025_1
             return linearIndex;
         }
 
-        private void Awake()
-        {
-            Initialize();
-        }
-
-        private void Initialize()
+        public void Initialize()
         {
             m_internalPieces = InitializePieces(m_unsafePieces).ToArray();
         }
@@ -57,7 +52,7 @@ namespace SLC_GameJam_2025_1
             }
         }
 
-        private PuzzleSolution Solve()
+        public PuzzleSolution Solve()
         {
             PuzzleSolution solution = new();
             
@@ -92,6 +87,10 @@ namespace SLC_GameJam_2025_1
                     };
                     last.m_next = entry;
                     last = entry;
+
+                    solution.m_first ??= entry;
+                    solution.m_last = entry;
+                    
                     break;
                 }
                 }
