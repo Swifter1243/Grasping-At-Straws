@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace SLC_GameJam_2025_1
 {
@@ -17,12 +20,31 @@ namespace SLC_GameJam_2025_1
 
         public void Initialize(Vector3Int dimensions, PuzzlePiece[] pieces)
         {
-            InitializePieces(pieces);
+            m_dimensions = dimensions;
+            m_pieces = InitializePieces(pieces).ToArray();
         }
 
-        private void InitializePieces(PuzzlePiece[] pieces)
+        private IEnumerable<PuzzlePiece> InitializePieces(PuzzlePiece[] pieces)
         {
-            // TODO
+            int intendedLength = m_dimensions.x * m_dimensions.y * m_dimensions.z;
+
+            if (intendedLength != pieces.Length)
+            {
+                throw new Exception("Missing or excessive pieces when initializing PuzzleLayout.");
+            }
+
+            for (int x = 0; x < m_dimensions.x; x++)
+            {
+                for (int y = 0; y < m_dimensions.y; y++)
+                {
+                    for (int z = 0; z < m_dimensions.z; z++)
+                    {
+                        Vector3Int position = new(x, y, z);
+                        PuzzlePiece piece = pieces.First(piece => piece.GetPiecePosition() == position);
+                        yield return piece;
+                    }
+                }
+            }
         }
     }   
 }

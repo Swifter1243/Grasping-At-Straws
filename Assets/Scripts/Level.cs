@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace SLC_GameJam_2025_1
 {
@@ -6,8 +7,11 @@ namespace SLC_GameJam_2025_1
     {
         public Vector3Int m_layoutDimensions;
         public PuzzlePiece[] m_puzzlePieces;
-        private PuzzleLayout m_puzzleLayout;
-        
-        
+        private readonly PuzzleLayout m_puzzleLayout = new();
+
+        private void Awake()
+        {
+            m_puzzleLayout.Initialize(m_layoutDimensions, m_puzzlePieces);
+        }
     }
 }
