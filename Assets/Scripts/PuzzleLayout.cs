@@ -57,6 +57,49 @@ namespace SLC_GameJam_2025_1
             }
         }
 
+        private PuzzleSolution Solve()
+        {
+            PuzzleSolution solution = new();
+            
+            Vector3Int searchPoint = m_in.BoardPosition;
+            Vector3Int searchDirection = m_in.BoardDirection;
+            PuzzleSolution.Entry last = new();
+
+            while (true)
+            {
+                PuzzleObject puzzleObject = GetObjectFromDirection(searchPoint, searchDirection);
+
+                if (puzzleObject == null)
+                {
+                    break;
+                }
+
+                switch (puzzleObject)
+                {
+                case PuzzleInput:
+                    solution.m_success = true;
+                    break;
+                case PuzzlePiece puzzlePiece:
+                {
+                    searchDirection = puzzlePiece.GetDirectionOut(searchDirection, out bool enteredInput1);
+                    searchPoint = puzzlePiece.BoardPosition;
+                    
+                    PuzzleSolution.Entry entry = new()
+                    {
+                        m_piece = puzzlePiece,
+                        m_enteredInput1 = enteredInput1,
+                        m_directionOut = searchDirection,
+                    };
+                    last.m_next = entry;
+                    last = entry;
+                    break;
+                }
+                }
+            }
+
+            return solution;
+        }
+
         private PuzzleObject GetObjectFromDirection(Vector3Int position, Vector3Int direction)
         {
             Vector3Int nextPosition = position + direction;
@@ -68,11 +111,7 @@ namespace SLC_GameJam_2025_1
 
             if (outOfBounds)
             {
-                if (nextPosition == m_out.BoardPosition)
-                {
-                    return m_out;
-                }
-                return null;
+                return nextPosition == m_out.BoardPosition ? m_out : null;
             }
             
             PuzzlePiece piece = this[nextPosition];
