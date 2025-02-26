@@ -9,6 +9,7 @@ namespace SLC_GameJam_2025_1
         public PuzzleLayout m_puzzleLayout;
         public ParticleSystem m_leakParticles;
         public CameraSmoothing m_cameraSmoothing;
+        public ObjectVisibilityList m_uiLayouts;
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
@@ -23,6 +24,7 @@ namespace SLC_GameJam_2025_1
         public State m_state = State.Editing;
         private float m_pipeProgress = 0;
         private PuzzlePiece m_selectedPiece = null;
+        private PuzzleSolution m_currentSolution = null;
 
         public void SelectPiece(PuzzlePiece piece)
         {
@@ -43,15 +45,23 @@ namespace SLC_GameJam_2025_1
             }
         }
 
-        private void ResetLevel()
+        public void StartEditing()
         {
+            m_state = State.Editing;
+            m_uiLayouts.SetVisible("Editor UI");
             m_leakParticles.gameObject.SetActive(false);
+            
+            foreach (PuzzlePiece puzzlePiece in m_puzzleLayout)
+            {
+                puzzlePiece.SetOpacity(FOCUSED_OPACITY);
+                puzzlePiece.SetFluidProgress(0);
+            }
         }
 
         private void Awake()
         {
             m_puzzleLayout.Initialize();
-            ResetLevel();
+            StartEditing();
             ResetView();
         }
 
@@ -60,24 +70,57 @@ namespace SLC_GameJam_2025_1
             m_cameraSmoothing.SetFromBounds(m_puzzleLayout.BoundingBox);
         }
 
-        private void AttemptSolve()
+        public void FastForward()
         {
-            DeselectPiece();
-            PuzzleSolution solution = m_puzzleLayout.Solve();
-            m_state = State.Solving;
-            m_puzzleLayout.SetAllPipesOpacity(UNFOCUSED_OPACITY);
+            if (m_state == State.Solving)
+            {
+                StopAllCoroutines();
 
-            if (solution.m_first == null)
-            {
-                OnSolveFailure(m_puzzleLayout.m_in.BoardPosition, m_puzzleLayout.m_in.BoardDirection);
-            }
-            else
-            {
-                ProcessNextEntry(solution, solution.m_first);
+                PuzzleSolution.Entry entry = m_currentSolution.m_first;
+                while (!CheckSolutionFinished(entry))
+                {
+                    entry.m_piece.SetOpacity(FOCUSED_OPACITY);
+                    entry.m_piece.SetFluidProgress(1);
+                    entry = entry.m_next;
+                }
             }
         }
 
-        private IEnumerator AnimatePipe(PuzzleSolution solution, PuzzleSolution.Entry entry)
+        public void AttemptSolve()
+        {
+            if (m_state == State.ViewingResult)
+            {
+                StartEditing();
+                AttemptSolve();
+            }
+            if (m_state == State.Editing)
+            {
+                m_uiLayouts.SetVisible("Solving UI");
+                DeselectPiece();
+                m_currentSolution = m_puzzleLayout.Solve();
+                m_state = State.Solving;
+                m_puzzleLayout.SetAllPipesOpacity(UNFOCUSED_OPACITY);
+
+                if (m_currentSolution.m_first == null)
+                {
+                    OnSolveFailure(m_puzzleLayout.m_in.BoardPosition, m_puzzleLayout.m_in.BoardDirection);
+                }
+                else
+                {
+                    ProcessNextAnimatedPipe(m_currentSolution.m_first);
+                }
+            }
+        }
+
+        private void ProcessNextAnimatedPipe(PuzzleSolution.Entry nextEntry)
+        {
+            if (!CheckSolutionFinished(nextEntry))
+            {
+                StartCoroutine(AnimatePipe(nextEntry));
+            }
+        }
+
+        private IEnumerator AnimatePipe(PuzzleSolution.Entry entry)
         {
             m_pipeProgress = 0;
             PuzzlePiece piece = entry.m_piece;
@@ -94,7 +137,7 @@ namespace SLC_GameJam_2025_1
                 if (m_pipeProgress >= 1f)
                 {
                     piece.SetFluidProgress(m_pipeProgress);
-                    ProcessNextEntry(solution, entry.m_next);
+                    ProcessNextAnimatedPipe(entry.m_next);
                     break;
                 }
 
@@ -102,35 +145,34 @@ namespace SLC_GameJam_2025_1
             }
         }
 
-        private void ProcessNextEntry(PuzzleSolution solution, PuzzleSolution.Entry nextEntry)
+        private bool CheckSolutionFinished(PuzzleSolution.Entry nextEntry)
         {
-            if (nextEntry == null)
-            {
-                m_state = State.ViewingResult;
+            if (nextEntry != null)
+                return false;
 
-                if (solution.m_success)
-                {
-                    OnSolveSuccess();
-                }
-                else
-                {
-                    OnSolveFailure(solution.m_last.m_piece.BoardPosition, solution.m_last.m_directionOut);
-                }
+            if (m_currentSolution.m_success)
+            {
+                OnSolveSuccess();
             }
             else
             {
-                StartCoroutine(AnimatePipe(solution, nextEntry));
+                OnSolveFailure(m_currentSolution.m_last.m_piece.BoardPosition, m_currentSolution.m_last.m_directionOut);
             }
+
+            return true;
         }
 
         private void OnSolveSuccess()
         {
-            
+            m_state = State.ViewingResult;
+            m_uiLayouts.SetVisible("Success UI");
         }
 
         private void OnSolveFailure(Vector3Int position, Vector3Int direction)
         {
+            m_state = State.ViewingResult;
             PlaceLeak(position, direction);
+            m_uiLayouts.SetVisible("Failure UI");
         }
 
         private void PlaceLeak(Vector3Int position, Vector3Int direction)
@@ -139,6 +181,11 @@ namespace SLC_GameJam_2025_1
             m_leakParticles.transform.position = pos;
             m_leakParticles.transform.rotation = Quaternion.LookRotation(direction);
             m_leakParticles.gameObject.SetActive(true);
+        }
+
+        public void NextLevel()
+        {
+            throw new NotImplementedException();
         }
     }
 }
