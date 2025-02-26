@@ -19,5 +19,7 @@ namespace SLC_GameJam_2025_1
 
         public Vector3Int Input1Direction => GetChildBoardDirection(m_input1);
         public Vector3Int Input2Direction => GetChildBoardDirection(m_input2);
+
+        public bool AcceptsDirection(Vector3Int direction) => direction == Input1Direction || direction == Input2Direction;
     }
 }

@@ -56,5 +56,33 @@ namespace SLC_GameJam_2025_1
                 }
             }
         }
+
+        private PuzzleObject GetObjectFromDirection(Vector3Int position, Vector3Int direction)
+        {
+            Vector3Int nextPosition = position + direction;
+            
+            bool outOfBoundsX = nextPosition.x < 0 || nextPosition.x >= m_dimensions.x;
+            bool outOfBoundsY = nextPosition.y < 0 || nextPosition.y >= m_dimensions.y;
+            bool outOfBoundsZ = nextPosition.z < 0 || nextPosition.z >= m_dimensions.z;
+            bool outOfBounds = outOfBoundsX || outOfBoundsY || outOfBoundsZ;
+
+            if (outOfBounds)
+            {
+                if (nextPosition == m_out.BoardPosition)
+                {
+                    return m_out;
+                }
+                return null;
+            }
+            
+            PuzzlePiece piece = this[nextPosition];
+
+            if (piece == null || !piece.AcceptsDirection(direction))
+            {
+                return null;
+            }
+
+            return piece;
+        }
     }   
 }
