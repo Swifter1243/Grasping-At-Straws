@@ -11,11 +11,34 @@ namespace SLC_GameJam_2025_1
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
-        
-        private bool m_solving = false;
-        private float m_pipeProgress = 0;
 
-        private void RestartLevel()
+        public enum State
+        {
+            Editing,
+            Solving,
+            ViewingResult
+        }
+        
+        public State m_state = State.Editing;
+        private float m_pipeProgress = 0;
+        private PuzzlePiece m_selectedPiece = null;
+
+        public void SelectPiece(PuzzlePiece piece)
+        {
+            piece.Select();
+            m_selectedPiece = piece;
+        }
+
+        public void DeselectPiece()
+        {
+            if (m_selectedPiece != null)
+            {
+                m_selectedPiece.Deselect();
+                m_selectedPiece = null;
+            }
+        }
+
+        private void ResetLevel()
         {
             m_leakParticles.gameObject.SetActive(false);
         }
@@ -23,15 +46,14 @@ namespace SLC_GameJam_2025_1
         private void Awake()
         {
             m_puzzleLayout.Initialize();
-            RestartLevel();
-            
-            AttemptSolve();
+            ResetLevel();
         }
 
         private void AttemptSolve()
         {
+            DeselectPiece();
             PuzzleSolution solution = m_puzzleLayout.Solve();
-            m_solving = true;
+            m_state = State.Solving;
             m_puzzleLayout.SetAllPipesOpacity(UNFOCUSED_OPACITY);
             
             if (solution.m_first == null)
@@ -73,7 +95,7 @@ namespace SLC_GameJam_2025_1
         {
             if (nextEntry == null)
             {
-                m_solving = false;
+                m_state = State.ViewingResult;
                 
                 if (solution.m_success)
                 {

@@ -162,6 +162,51 @@ Transform:
   - {fileID: 959386171}
   m_Father: {fileID: 656784668}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &272766267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 272766268}
+  - component: {fileID: 272766269}
+  m_Layer: 0
+  m_Name: SceneInteraction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &272766268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272766267}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &272766269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272766267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d64a94f4aee047c1ac9b833ab0235c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_game: {fileID: 727688844}
 --- !u!1001 &362585586
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -488,6 +533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_puzzleLayout: {fileID: 656784669}
   m_leakParticles: {fileID: 1885190514}
+  m_state: 0
 --- !u!1001 &959386170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1240,4 +1286,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 963194228}
   - {fileID: 1885190512}
+  - {fileID: 272766268}
   - {fileID: 727688843}

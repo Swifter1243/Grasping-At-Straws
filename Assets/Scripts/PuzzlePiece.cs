@@ -8,12 +8,18 @@ namespace SLC_GameJam_2025_1
         public Transform m_input1;
         public Transform m_input2;
         public MeshRenderer m_meshRenderer;
+        private Collider m_collider;
 
         private readonly static Color s_input1Color = new(0, 0.5f, 0.4f);
         private readonly static Color s_input2Color = new(1, 0.4f, 0);
         private readonly static int s_fluidProgress = Shader.PropertyToID("_FluidProgress");
         private readonly static int s_flipFluid = Shader.PropertyToID("_FlipFluid");
         private readonly static int s_opacity = Shader.PropertyToID("_Opacity");
+
+        private void Awake()
+        {
+            m_collider = GetComponent<Collider>();
+        }
 
         private void OnDrawGizmos()
         {
@@ -52,6 +58,16 @@ namespace SLC_GameJam_2025_1
 
             usingInput1 = directionIn == Input1DirectionIn;
             return usingInput1 ? Input2DirectionOut : Input1DirectionOut;
+        }
+
+        public void Select()
+        {
+            m_collider.enabled = false;
+        }
+
+        public void Deselect()
+        {
+            m_collider.enabled = true;
         }
     }
 }
