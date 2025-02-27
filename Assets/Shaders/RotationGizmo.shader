@@ -54,14 +54,9 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
 
-                float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
-                float3 centerPos = mul(unity_ObjectToWorld, float4(0,0,0,1));
-
-                float3 localCamPos = mul(unity_WorldToObject, _WorldSpaceCameraPos);
-
+                float3 localCamPos = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1));
                 float2 centerUV = v.uv * 2 - 1;
                 float2 camPosUV = localCamPos.xz;
-
                 float2 targetUV = _InUse ? _ClickPosition : camPosUV;
 
                 o.centerUV = centerUV;
