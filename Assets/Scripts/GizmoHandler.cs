@@ -11,6 +11,7 @@ namespace SLC_GameJam_2025_1
 		public RotationGizmo m_zAxis;
 
 		private RotationGizmo m_inUseGizmo;
+		private PuzzlePiece m_activePiece;
 
 		private IEnumerable<RotationGizmo> GetRotationGizmos()
 		{
@@ -26,7 +27,7 @@ namespace SLC_GameJam_2025_1
 			m_zAxis.Initialize(Color.blue);
 		}
 
-		public void StartUsing(RotationGizmo rotationGizmo)
+		public void StartUsing(RotationGizmo rotationGizmo, Ray ray)
 		{
 			foreach (RotationGizmo gizmo in GetRotationGizmos())
 			{
@@ -34,7 +35,7 @@ namespace SLC_GameJam_2025_1
 			}
 
 			m_inUseGizmo = rotationGizmo;
-			rotationGizmo.SetInUse();
+			rotationGizmo.SetInUse(ray);
 		}
 
 		public void UpdateGizmoInteraction(Ray ray)
@@ -42,7 +43,7 @@ namespace SLC_GameJam_2025_1
 			if (!m_inUseGizmo)
 				return;
 
-			m_inUseGizmo.RaycastClickPosition(ray);
+			m_inUseGizmo.UpdateClickPosition(ray);
 		}
 
 		public void StopUsing()
@@ -61,6 +62,12 @@ namespace SLC_GameJam_2025_1
 		{
 			gameObject.SetActive(true);
 			transform.position = piece.transform.position;
+			m_activePiece = piece;
+
+			foreach (RotationGizmo rotationGizmo in GetRotationGizmos())
+			{
+				rotationGizmo.SetActivePiece(piece);
+			}
 		}
 
 		public void Close()

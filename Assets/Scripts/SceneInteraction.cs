@@ -78,7 +78,7 @@ namespace SLC_GameJam_2025_1
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Rotation Gizmo"))
             {
                 RotationGizmo rotationGizmo = hit.transform.GetComponent<RotationGizmo>();
-                m_gizmoHandler.StartUsing(rotationGizmo);
+                m_gizmoHandler.StartUsing(rotationGizmo, GetMouseRay());
             }
         }
     }
