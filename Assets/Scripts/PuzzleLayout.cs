@@ -16,12 +16,12 @@ namespace SLC_GameJam_2025_1
         // Parsed
         private Dictionary<Vector3Int, PuzzlePiece> m_internalPieces;
 
-        private PuzzlePiece this[Vector3Int index] => m_internalPieces[index];
+        private PuzzlePiece this[Vector3Int index] => m_internalPieces.ContainsKey(index) ? m_internalPieces[index] : null;
 
         public void Initialize()
         {
-            PuzzlePiece[] mUnsafePieces = GetComponentsInChildren<PuzzlePiece>();
-            m_internalPieces = InitializePieces(mUnsafePieces).ToDictionary(pair => pair.Key, pair => pair.Value);
+            PuzzlePiece[] unsafePieces = GetComponentsInChildren<PuzzlePiece>();
+            m_internalPieces = InitializePieces(unsafePieces).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         public void SetAllPipesOpacity(float opacity)
@@ -43,11 +43,6 @@ namespace SLC_GameJam_2025_1
 
         private IEnumerable<KeyValuePair<Vector3Int, PuzzlePiece>> InitializePieces(PuzzlePiece[] pieces)
         {
-            if (pieces.Length != Volume)
-            {
-                throw new Exception("Missing or excessive pieces when initializing PuzzleLayout.");
-            }
-
             for (int x = 0; x < m_dimensions.x; x++)
             {
                 for (int y = 0; y < m_dimensions.y; y++)
@@ -55,7 +50,11 @@ namespace SLC_GameJam_2025_1
                     for (int z = 0; z < m_dimensions.z; z++)
                     {
                         Vector3Int position = new(x, y, z);
-                        PuzzlePiece piece = pieces.First(piece => piece.BoardPosition == position);
+                        PuzzlePiece piece = pieces.FirstOrDefault(piece => piece.BoardPosition == position);
+
+                        if (!piece)
+                            continue;
+
                         yield return new KeyValuePair<Vector3Int, PuzzlePiece>(position, piece);
                     }
                 }
