@@ -74,7 +74,7 @@ namespace SLC_GameJam_2025_1
 
         public void SetFromBounds(Bounds bounds)
         {
-            m_targetDistance = bounds.extents.magnitude * 2.5f;
+            m_targetDistance = bounds.extents.magnitude * 1.5f;
             m_targetPivot = bounds.center;
         }
     }
