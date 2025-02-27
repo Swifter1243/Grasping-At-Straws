@@ -18,7 +18,6 @@ namespace SLC_GameJam_2025_1
         private float m_distance = 0;
         private Vector3 m_pivot = Vector3.zero;
         private Quaternion m_rotation = Quaternion.identity;
-        private Vector3 m_lastMousePosition = Vector3.zero;
         
         public event Action onDistanceChanged;
         public event Action onRotationChanged;
@@ -51,11 +50,6 @@ namespace SLC_GameJam_2025_1
             Vector3 back = m_rotation * Vector3.back;
             transform.rotation = m_rotation;
             transform.position = m_pivot + back * m_distance;
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                m_lastMousePosition = Input.mousePosition;
-            }
 
             if (Input.mouseScrollDelta.y != 0)
             {
