@@ -10,7 +10,6 @@ namespace SLC_GameJam_2025_1
     {
         // Inspector
         public Vector3Int m_dimensions;
-        public PuzzlePiece[] m_unsafePieces;
         public PuzzleInput m_in;
         public PuzzleInput m_out;
 
@@ -21,7 +20,8 @@ namespace SLC_GameJam_2025_1
 
         public void Initialize()
         {
-            m_internalPieces = InitializePieces(m_unsafePieces).ToDictionary(pair => pair.Key, pair => pair.Value);
+            PuzzlePiece[] mUnsafePieces = GetComponentsInChildren<PuzzlePiece>();
+            m_internalPieces = InitializePieces(mUnsafePieces).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         public void SetAllPipesOpacity(float opacity)

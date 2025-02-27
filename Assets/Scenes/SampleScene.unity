@@ -394,7 +394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_puzzles:
   - {fileID: 8024967563669895984, guid: 09e9f6832d7ea1e49afaa6f0c2a7309e, type: 3}
-  - {fileID: 8024967563669895984, guid: 09e9f6832d7ea1e49afaa6f0c2a7309e, type: 3}
+  - {fileID: 8024967563669895984, guid: 61b839d28f50781408318918d55dd5a7, type: 3}
   m_puzzleHolder: {fileID: 155816113}
   m_gizmoHandler: {fileID: 782838696}
   m_leakParticles: {fileID: 1885190514}
