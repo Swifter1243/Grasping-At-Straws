@@ -61,6 +61,12 @@ namespace SLC_GameJam_2025_1
 
         public void NextLevel()
         {
+            if (m_currentPuzzle != null)
+            {
+                Destroy(m_currentPuzzle.gameObject);
+                m_currentPuzzle = null;
+            }
+
             if (m_currentPuzzleIndex >= m_puzzles.Count)
             {
                 Win();
@@ -74,7 +80,8 @@ namespace SLC_GameJam_2025_1
 
         public void ExitLevel()
         {
-            throw new NotImplementedException();
+            m_uiLayouts.SetVisible("Transition UI");
+            StartCoroutine(TransitionOut());
         }
 
         private void Win()
@@ -90,16 +97,43 @@ namespace SLC_GameJam_2025_1
             {
                 m_transitionTime += Time.deltaTime / m_transitionInTime;
 
-                float easedTime = Easing.InOutCubic(m_transitionTime);
+                float timeInOutCubic = Easing.InOutCubic(m_transitionTime);
 
-                m_puzzleHolder.position = Vector3.Lerp(new Vector3(0, -2, 0), Vector3.zero, easedTime);
-                m_puzzleHolder.localScale = Vector3.one * easedTime;
+                m_puzzleHolder.rotation = Quaternion.Slerp(Quaternion.Euler(30, 59, 39), Quaternion.identity, timeInOutCubic);
+                m_puzzleHolder.position = Vector3.Lerp(new Vector3(0, -0.4f, 0), Vector3.zero, timeInOutCubic);
+                m_puzzleHolder.localScale = Vector3.one * timeInOutCubic;
 
                 if (m_transitionTime >= 1)
                 {
                     m_puzzleHolder.position = Vector3.zero;
                     m_puzzleHolder.localScale = Vector3.one;
+                    m_puzzleHolder.rotation = Quaternion.identity;
                     StartPuzzleGameplay();
+                    break;
+                }
+
+                yield return null;
+            }
+        }
+
+        private IEnumerator TransitionOut()
+        {
+            m_transitionTime = 0;
+
+            while (true)
+            {
+                m_transitionTime += Time.deltaTime / m_transitionInTime;
+
+                float timeInOutCubic = Easing.InOutCubic(m_transitionTime);
+
+                m_puzzleHolder.rotation = Quaternion.Slerp(Quaternion.identity, Quaternion.Euler(30, 59, 39), timeInOutCubic);
+                m_puzzleHolder.position = Vector3.Lerp(Vector3.zero, new Vector3(0, 0.4f, 0), timeInOutCubic);
+                m_puzzleHolder.localScale = Vector3.one * (1 - timeInOutCubic);
+
+                if (m_transitionTime >= 1)
+                {
+                    m_puzzleHolder.localScale = Vector3.zero;
+                    NextLevel();
                     break;
                 }
 
