@@ -7,7 +7,7 @@ namespace SLC_GameJam_2025_1
     {
         public Vector3 m_initialRotation;
         public float m_smoothRate = 1;
-        public float m_lookSensitivity = 1;
+        public Vector2 m_lookSensitivity = new(500, 300);
         public float m_scrollSensitivity = 1;
 
         public float m_targetDistance = 3;
@@ -65,7 +65,7 @@ namespace SLC_GameJam_2025_1
                 Vector3 mouseDelta = Input.mousePosition - m_lastMousePosition;
                 m_lastMousePosition = Input.mousePosition;
 
-                Vector2 movement = mouseDelta * (Time.deltaTime * m_lookSensitivity);
+                Vector2 movement = mouseDelta.normalized * (Time.deltaTime * m_lookSensitivity);
 
                 m_targetRotation = Quaternion.Euler(0, movement.x, 0) * m_targetRotation;
                 m_targetRotation *= Quaternion.Euler(-movement.y, 0, 0);
