@@ -6,6 +6,7 @@
         [ToggleUI] _FlipFluid ("Flip Fluid", Int) = 0
         [ToggleUI] _Hovered ("Hovered", Int) = 0
         _Color ("Color", Color) = (1, 1, 1)
+        _StripColor ("Strip Color", Color) = (1, 0, 0)
         _WaterColor ("Water Color", Color) = (1, 1, 1)
         _FluidProgress ("Fluid Progress", Range(0, 1)) = 0
         _Opacity ("Opacity", Range(0,1)) = 1
@@ -35,17 +36,20 @@
             {
                 float4 vertex : POSITION;
                 float3 normal : NORMAL;
+                float color : COLOR;
             };
 
             struct v2f
             {
+                float4 vertex : SV_POSITION;
                 float3 normal : TEXCOORD0;
                 float3 localPos : TEXCOORD1;
                 float3 reflection : TEXCOORD2;
-                float4 vertex : SV_POSITION;
+                float color : TEXCOORD3;
             };
 
             float3 _Color;
+            float3 _StripColor;
             float3 _WaterColor;
             float _FluidProgress;
             float _Opacity;
@@ -59,6 +63,7 @@
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.normal = UnityObjectToWorldNormal(v.normal);
                 o.localPos = v.vertex;
+                o.color = v.color;
 
                 float3 worldPos = mul(unity_ObjectToWorld, v.vertex);
                 float3 viewVector = worldPos - _WorldSpaceCameraPos;
@@ -121,7 +126,7 @@
                 float p = _FluidProgress * 1.01 - fluidPosition;
                 float waterAmount = step(0.01, p);
 
-                float3 normalCol = _Color;
+                float3 normalCol = lerp(_Color, _StripColor, pow(i.color, 3));
                 normalCol += _OutlineColor.rgb * _Hovered * 0.4;
 
                 float3 col = lerp(normalCol, _WaterColor, waterAmount);
