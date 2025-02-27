@@ -119,6 +119,11 @@ namespace SLC_GameJam_2025_1
             m_uiLayouts.Initialize();
             m_uiLayouts.SetVisible("Editor UI");
             m_leakParticles.gameObject.SetActive(false);
+            ResetView();
+            foreach (PuzzlePiece puzzlePiece in m_puzzleLayout)
+            {
+                puzzlePiece.SetFluidProgress(0);
+            }
         }
 
         private void StartLayout()
@@ -126,10 +131,6 @@ namespace SLC_GameJam_2025_1
             m_selectedLayer = 0;
 
             UpdateLayerView();
-            foreach (PuzzlePiece puzzlePiece in m_puzzleLayout)
-            {
-                puzzlePiece.SetFluidProgress(0);
-            }
         }
 
         private void Awake()
@@ -179,6 +180,7 @@ namespace SLC_GameJam_2025_1
             {
                 m_uiLayouts.SetVisible("Solving UI");
                 DeselectPiece();
+                m_cameraSmoothing.SetFromBounds(m_puzzleLayout.BoundingBox);
                 m_currentSolution = m_puzzleLayout.Solve();
                 m_state = State.Solving;
                 m_puzzleLayout.SetAllPipesOpacity(UNFOCUSED_OPACITY);
