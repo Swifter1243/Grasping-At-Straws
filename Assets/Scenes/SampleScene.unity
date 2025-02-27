@@ -412,7 +412,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8985938890248023940, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8985938890248023940, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -698,7 +698,7 @@ MonoBehaviour:
   - {fileID: 8024967563669895984, guid: 64b212460a159e448826b0aa7f1db733, type: 3}
   - {fileID: 8024967563669895984, guid: c4589765020b6c84ba096796ef784edd, type: 3}
   - {fileID: 8024967563669895984, guid: 269029c99a283854e96c7c8aa3da518e, type: 3}
-  m_currentPuzzleIndex: 0
+  m_currentPuzzleIndex: 4
   m_puzzleHolder: {fileID: 155816113}
   m_gizmoHandler: {fileID: 782838696}
   m_leakParticles: {fileID: 1885190514}
@@ -1242,10 +1242,10 @@ RectTransform:
   - {fileID: 549351549}
   m_Father: {fileID: 578834746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -221.5784, y: -12.8941}
-  m_SizeDelta: {x: 443.161, y: 259.7027}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -0.5, y: -110.61914}
+  m_SizeDelta: {x: 443.161, y: 222.2363}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1382165020
 MonoBehaviour:
