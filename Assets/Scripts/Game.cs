@@ -68,7 +68,7 @@ namespace SLC_GameJam_2025_1
             }
 
             m_currentPuzzle = Instantiate(m_puzzles[m_currentPuzzleIndex++], m_puzzleHolder);
-            m_currentPuzzle.transform.localPosition = -m_currentPuzzle.m_dimensions / 2;
+            m_currentPuzzle.transform.localPosition = -m_currentPuzzle.Center;
             StartCoroutine(TransitionIn());
         }
 
@@ -320,7 +320,7 @@ namespace SLC_GameJam_2025_1
 
         private void PlaceLeak(Vector3Int position, Vector3Int direction)
         {
-            Vector3 pos = position + (Vector3) direction * 0.5f;
+            Vector3 pos = position + (Vector3) direction * 0.5f - m_currentPuzzle.Center;
             m_leakParticles.transform.position = pos;
             m_leakParticles.transform.rotation = Quaternion.LookRotation(direction);
             m_leakParticles.gameObject.SetActive(true);

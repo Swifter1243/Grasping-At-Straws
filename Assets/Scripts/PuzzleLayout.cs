@@ -34,6 +34,7 @@ namespace SLC_GameJam_2025_1
 
         private int Volume => m_dimensions.x * m_dimensions.y * m_dimensions.z;
         public Bounds BoundingBox => new(Vector3.zero, m_dimensions);
+        public Vector3 Center => (m_dimensions - Vector3.one) / 2;
 
         public Bounds GetBoundingBoxAtLayer(int layer)
         {
@@ -139,7 +140,7 @@ namespace SLC_GameJam_2025_1
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawWireCube(m_dimensions / 2, m_dimensions);
+            Gizmos.DrawWireCube(Center, m_dimensions);
         }
 
         public IEnumerator<PuzzlePiece> GetEnumerator() => m_internalPieces.Values.GetEnumerator();
