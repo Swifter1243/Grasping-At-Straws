@@ -132,6 +132,7 @@ namespace SLC_GameJam_2025_1
             m_playbackSpeedSlider.value = m_playbackSpeed;
             m_playbackSpeedSlider.onValueChanged.AddListener(UpdatePlaybackSpeed);
             m_puzzleLayout.Initialize();
+            m_gizmoHandler.Close();
             StartEditing();
         }
 
