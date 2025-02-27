@@ -103,6 +103,10 @@ namespace SLC_GameJam_2025_1
                 PuzzlePiece piece = hit.transform.GetComponent<PuzzlePiece>();
                 m_game.HoverPiece(piece);
             }
+            else
+            {
+                m_game.UnHoverPiece();
+            }
         }
     }
 }
