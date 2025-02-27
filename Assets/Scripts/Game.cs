@@ -158,9 +158,30 @@ namespace SLC_GameJam_2025_1
 
         private void ChangeSelectedLayer(int layer)
         {
-            DeselectPiece();
+            if (layer == m_selectedLayer)
+                return;
+
             m_selectedLayer = layer;
             UpdateLayerView();
+
+            if (m_selectedPiece)
+            {
+                Vector3Int newPos = m_selectedPiece.BoardPosition;
+                newPos.y = layer;
+
+                PuzzlePiece old = m_selectedPiece;
+                PuzzlePiece piece = m_currentPuzzle[newPos];
+                if (piece)
+                {
+                    SelectPiece(piece);
+                }
+                else
+                {
+                    DeselectPiece();
+                }
+
+                old.SetInteractable(false);
+            }
         }
 
         private void UpdateLayerView()

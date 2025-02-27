@@ -16,7 +16,7 @@ namespace SLC_GameJam_2025_1
 
         private Dictionary<Vector3Int, PuzzlePiece> m_internalPieces;
 
-        private PuzzlePiece this[Vector3Int index] => m_internalPieces.ContainsKey(index) ? m_internalPieces[index] : null;
+        public PuzzlePiece this[Vector3Int index] => m_internalPieces.ContainsKey(index) ? m_internalPieces[index] : null;
 
         public void Initialize()
         {
