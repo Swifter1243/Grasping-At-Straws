@@ -133,6 +133,7 @@
         Pass
         {
             Cull Off
+            ZWrite Off
 
             CGPROGRAM
             #pragma vertex vert
