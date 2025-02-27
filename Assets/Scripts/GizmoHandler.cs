@@ -42,12 +42,7 @@ namespace SLC_GameJam_2025_1
 			if (!m_inUseGizmo)
 				return;
 
-			if (!Physics.BoxCast(m_inUseGizmo.transform.position, m_inUseGizmo.transform.up, ray.direction, out RaycastHit hit))
-				return;
-
-			Vector3 worldPoint = m_inUseGizmo.transform.InverseTransformPoint(hit.point);
-			Vector2 clickPosition = new(worldPoint.x, worldPoint.z);
-			m_inUseGizmo.SetClickPosition(clickPosition);
+			m_inUseGizmo.RaycastClickPosition(ray);
 		}
 
 		public void StopUsing()

@@ -27,10 +27,22 @@ namespace SLC_GameJam_2025_1
 			m_meshRenderer.material.SetFloat(s_opacity, 0.2f);
 		}
 
-		public void SetClickPosition(Vector2 clickPosition)
+		private void SetClickPosition(Vector2 clickPosition)
 		{
 			Vector4 vector = new(clickPosition.x, clickPosition.y, 0, 0);
 			m_meshRenderer.material.SetVector(s_clickPosition, vector);
+		}
+
+		public void RaycastClickPosition(Ray ray)
+		{
+			Plane plane = new(transform.up, transform.position);
+			if (plane.Raycast(ray, out float enter))
+			{
+				Vector3 worldPoint = ray.GetPoint(enter);
+				Vector3 localPoint = transform.InverseTransformPoint(worldPoint);
+				Vector2 clickPosition = new(localPoint.x, localPoint.z);
+				SetClickPosition(clickPosition);
+			}
 		}
 
 		public void ResetVisuals()
