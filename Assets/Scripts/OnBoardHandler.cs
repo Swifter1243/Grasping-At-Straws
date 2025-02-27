@@ -56,14 +56,14 @@ namespace SLC_GameJam_2025_1
 
         private void OnNewPuzzleLoaded(PuzzleLayout puzzleLayout)
         {
-            switch (puzzleLayout.m_onboardingType)
+            switch (puzzleLayout.m_onBoardingType)
             {
-            case OnboardingType.None:
+            case OnBoardingType.None:
                 break;
-            case OnboardingType.BasicControls:
+            case OnBoardingType.BasicControls:
                 SetupPanning();
                 break;
-            case OnboardingType.Start3D:
+            case OnBoardingType.Start3D:
                 SetupLayers();
                 break;
             }

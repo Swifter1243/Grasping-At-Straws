@@ -13,7 +13,7 @@ namespace SLC_GameJam_2025_1
         public Vector3Int m_dimensions;
         public PuzzleInput m_in;
         public PuzzleInput m_out;
-        public OnboardingType m_onboardingType;
+        public OnBoardingType m_onBoardingType;
 
         private Dictionary<Vector3Int, PuzzlePiece> m_internalPieces;
 

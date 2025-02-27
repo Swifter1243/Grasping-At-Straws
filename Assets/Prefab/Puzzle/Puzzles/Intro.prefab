@@ -170,6 +170,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7243293454963023002, guid: 34e1cc607254b4c46947e765fed0a8cc, type: 3}
+      propertyPath: m_onBoardingType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7243293454963023002, guid: 34e1cc607254b4c46947e765fed0a8cc, type: 3}
       propertyPath: m_onboardingType
       value: 1
       objectReference: {fileID: 0}
