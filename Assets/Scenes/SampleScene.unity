@@ -401,7 +401,7 @@ MonoBehaviour:
   - {fileID: 8024967563669895984, guid: 64b212460a159e448826b0aa7f1db733, type: 3}
   - {fileID: 8024967563669895984, guid: c4589765020b6c84ba096796ef784edd, type: 3}
   - {fileID: 8024967563669895984, guid: 269029c99a283854e96c7c8aa3da518e, type: 3}
-  m_currentPuzzleIndex: 0
+  m_currentPuzzleIndex: 7
   m_puzzleHolder: {fileID: 155816113}
   m_gizmoHandler: {fileID: 782838696}
   m_leakParticles: {fileID: 1885190514}

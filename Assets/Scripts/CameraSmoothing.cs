@@ -9,7 +9,7 @@ namespace SLC_GameJam_2025_1
         public float m_smoothRate = 1;
         public float m_lookSensitivity = 1;
         public float m_scrollSensitivity = 1;
-        
+
         public float m_targetDistance = 3;
         private Quaternion m_targetRotation = Quaternion.identity;
         public Vector3 m_targetPivot = Vector3.zero;
@@ -74,7 +74,8 @@ namespace SLC_GameJam_2025_1
 
         public void SetFromBounds(Bounds bounds)
         {
-            m_targetDistance = bounds.extents.magnitude * 1.5f;
+            float maxEdge = Mathf.Max(bounds.extents.x, Mathf.Max(bounds.extents.y, bounds.extents.z));
+            m_targetDistance = maxEdge * 3.5f;
             m_targetPivot = bounds.center;
         }
     }
