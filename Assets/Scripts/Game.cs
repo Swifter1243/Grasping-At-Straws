@@ -199,7 +199,7 @@ namespace SLC_GameJam_2025_1
             m_gizmoHandler.Open(piece);
             m_selectedPiece = piece;
             m_cameraSmoothing.m_targetPivot = piece.transform.position;
-            m_cameraSmoothing.m_targetDistance = 2;
+            m_cameraSmoothing.m_targetDistance = m_currentPuzzle.BoundingBox.GetMaxAxis() * 2;
         }
 
         public void DeselectPiece()

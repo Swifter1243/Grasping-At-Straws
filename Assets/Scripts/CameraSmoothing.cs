@@ -74,8 +74,7 @@ namespace SLC_GameJam_2025_1
 
         public void SetFromBounds(Bounds bounds)
         {
-            float maxEdge = Mathf.Max(bounds.extents.x, Mathf.Max(bounds.extents.y, bounds.extents.z));
-            m_targetDistance = maxEdge * 3.5f;
+            m_targetDistance = bounds.GetMaxAxis() * 3.5f;
             m_targetPivot = bounds.center;
         }
     }
