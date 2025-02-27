@@ -48,6 +48,12 @@ namespace SLC_GameJam_2025_1
             m_gizmoHandler.onGizmoUsed += () => onComplete.Invoke();
         }
 
+        private void SetupLayers()
+        {
+            UnityEvent onComplete = m_layers.Setup();
+            m_game.onLayerChanged += () => onComplete.Invoke();
+        }
+
         private void OnNewPuzzleLoaded(PuzzleLayout puzzleLayout)
         {
             switch (puzzleLayout.m_onboardingType)
@@ -56,6 +62,9 @@ namespace SLC_GameJam_2025_1
                 break;
             case OnboardingType.BasicControls:
                 SetupPanning();
+                break;
+            case OnboardingType.Start3D:
+                SetupLayers();
                 break;
             }
         }

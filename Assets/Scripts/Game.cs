@@ -19,6 +19,7 @@ namespace SLC_GameJam_2025_1
         public float m_transitionOutTime = 1.5f;
         public event Action<PuzzleLayout> onNewPuzzleStarted;
         public event Action onPieceSelected;
+        public event Action onLayerChanged;
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
@@ -163,6 +164,8 @@ namespace SLC_GameJam_2025_1
         {
             if (layer == m_selectedLayer)
                 return;
+            
+            onLayerChanged?.Invoke();
 
             m_selectedLayer = layer;
             UpdateLayerView();
