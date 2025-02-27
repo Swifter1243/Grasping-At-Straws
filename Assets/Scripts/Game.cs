@@ -107,6 +107,9 @@ namespace SLC_GameJam_2025_1
                     m_puzzleHolder.position = Vector3.zero;
                     m_puzzleHolder.localScale = Vector3.one;
                     m_puzzleHolder.rotation = Quaternion.identity;
+
+                    yield return new WaitForSeconds(0.5f);
+
                     StartPuzzleGameplay();
                     break;
                 }
