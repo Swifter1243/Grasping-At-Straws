@@ -56,14 +56,35 @@ namespace SLC_GameJam_2025_1
             m_playbackSpeedSlider.onValueChanged.AddListener(UpdatePlaybackSpeed);
             m_gizmoHandler.Close();
 
+            NextLevel();
+        }
+
+        public void NextLevel()
+        {
+            if (m_currentPuzzleIndex >= m_puzzles.Count)
+            {
+                Win();
+                return;
+            }
+
+            m_currentPuzzle = Instantiate(m_puzzles[m_currentPuzzleIndex++], m_puzzleHolder);
+            m_currentPuzzle.transform.localPosition = -m_currentPuzzle.m_dimensions / 2;
             StartCoroutine(TransitionIn());
+        }
+
+        public void ExitLevel()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Win()
+        {
+            throw new NotImplementedException();
         }
 
         private IEnumerator TransitionIn()
         {
             m_transitionTime = 0;
-            m_currentPuzzle = Instantiate(m_puzzles[m_currentPuzzleIndex++], m_puzzleHolder);
-            m_currentPuzzle.transform.localPosition = -m_currentPuzzle.m_dimensions / 2;
 
             while (true)
             {
@@ -303,11 +324,6 @@ namespace SLC_GameJam_2025_1
             m_leakParticles.transform.position = pos;
             m_leakParticles.transform.rotation = Quaternion.LookRotation(direction);
             m_leakParticles.gameObject.SetActive(true);
-        }
-
-        public void NextLevel()
-        {
-            throw new NotImplementedException();
         }
     }
 }
