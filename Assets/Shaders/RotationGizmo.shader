@@ -3,6 +3,8 @@
     Properties
     {
         _HandleRadius ("Handle Radius", Float) = 0.5
+        _HandleArrowSize ("Handle Arrow Size", Float) = 0.1
+        _HandleArrowDistance ("Handle Arrow Distance", Float) = 0.6
         _HandleWidth ("Handle Width", Float) = 0.1
         _HandleStart ("Handle Start", Float) = 0.9
         _AxisColor ("Axis Color", Color) = (1,0,0)
@@ -41,6 +43,8 @@
             };
 
             float _HandleRadius;
+            float _HandleArrowDistance;
+            float _HandleArrowSize;
             float _HandleWidth;
             float _HandleStart;
             float3 _AxisColor;
@@ -64,10 +68,18 @@
 
             fixed4 frag(v2f i) : SV_Target
             {
+
                 float alignment = dot(normalize(-i.localPos), normalize(i.targetPos));
+                float angle = acos(dot(normalize(-i.localPos.xz), normalize(i.targetPos.xz) * 0.99999));
+
+                float saw = 1 - (angle - _HandleArrowDistance) / _HandleArrowSize;
+                float spike = saw * (angle > _HandleArrowDistance && angle < _HandleArrowDistance + _HandleArrowSize);
+
                 float viewAlignment = smoothstep(_HandleStart, 1, alignment);
 
                 float handleDist = abs(_HandleRadius - length(i.localPos.xz));
+                handleDist -= spike * _HandleArrowSize * 0.3 * (1 - _InUse);
+
                 float handleCircle = 1 - step(_HandleWidth + _InUse * _HandleWidth, handleDist);
                 float handle = handleCircle * viewAlignment;
 
