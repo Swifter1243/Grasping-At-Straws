@@ -9,7 +9,7 @@ namespace SLC_GameJam_2025_1
     public class Game : MonoBehaviour
     {
         public List<PuzzleLayout> m_puzzles = new();
-
+        public int m_currentPuzzleIndex = 0;
         public Transform m_puzzleHolder;
         public GizmoHandler m_gizmoHandler;
         public ParticleSystem m_leakParticles;
@@ -31,7 +31,6 @@ namespace SLC_GameJam_2025_1
 
         public State m_state = State.Transition;
         private PuzzleLayout m_currentPuzzle;
-        private int m_currentPuzzleIndex = 0;
         private float m_pipeProgress = 0;
         private PuzzlePiece m_selectedPiece = null;
         private PuzzlePiece m_hoveredPiece = null;
