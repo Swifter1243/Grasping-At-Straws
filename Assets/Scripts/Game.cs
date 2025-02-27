@@ -23,6 +23,7 @@ namespace SLC_GameJam_2025_1
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
+        private const float DEFAULT_PLAYBACK_SPEED = 0.6f;
 
 
         public enum State
@@ -40,7 +41,7 @@ namespace SLC_GameJam_2025_1
         private PuzzlePiece m_hoveredPiece = null;
         private PuzzleSolution m_currentSolution = null;
         public Slider m_playbackSpeedSlider;
-        private float m_playbackSpeed = 0.6f;
+        private float m_playbackSpeed = DEFAULT_PLAYBACK_SPEED;
         private int m_selectedLayer = 0;
         private Bounds m_focusBounds;
         private float m_transitionTime = 0;
@@ -308,6 +309,7 @@ namespace SLC_GameJam_2025_1
                 m_currentSolution = m_currentPuzzle.Solve();
                 m_state = State.Solving;
                 m_currentPuzzle.SetAllPipesOpacity(UNFOCUSED_OPACITY);
+                m_playbackSpeedSlider.value = DEFAULT_PLAYBACK_SPEED;
 
                 if (m_currentSolution.m_first == null)
                 {
