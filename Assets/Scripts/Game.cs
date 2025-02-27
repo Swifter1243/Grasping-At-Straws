@@ -145,9 +145,6 @@ namespace SLC_GameJam_2025_1
 
         private void HandleLayerChangeInputs()
         {
-            if (m_selectedPiece)
-                return;
-
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 ChangeSelectedLayer(Math.Max(m_selectedLayer - 1, 0));
@@ -160,6 +157,7 @@ namespace SLC_GameJam_2025_1
 
         private void ChangeSelectedLayer(int layer)
         {
+            DeselectPiece();
             m_selectedLayer = layer;
             UpdateLayerView();
         }
