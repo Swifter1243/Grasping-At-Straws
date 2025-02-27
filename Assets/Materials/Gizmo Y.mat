@@ -68,8 +68,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HandleArrowDistance: 0.26
-    - _HandleArrowSize: 0.21
+    - _HandleArrowDistance: 0.35
+    - _HandleArrowSize: 0.2
     - _HandleRadius: 0.59
     - _HandleStart: -0.29
     - _HandleWidth: 0.02
@@ -77,7 +77,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Opacity: 1
+    - _Opacity: 0.247
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -85,7 +85,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _AxisColor: {r: 1, g: 0, b: 0, a: 1}
+    - _AxisColor: {r: 0.40482342, g: 1, b: 0, a: 1}
     - _ClickPosition: {r: -1.7, g: 1, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
