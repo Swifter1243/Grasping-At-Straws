@@ -119,6 +119,11 @@ namespace SLC_GameJam_2025_1
             m_uiLayouts.Initialize();
             m_uiLayouts.SetVisible("Editor UI");
             m_leakParticles.gameObject.SetActive(false);
+        }
+
+        private void StartLayout()
+        {
+            m_selectedLayer = 0;
 
             UpdateLayerView();
             foreach (PuzzlePiece puzzlePiece in m_puzzleLayout)
@@ -134,6 +139,7 @@ namespace SLC_GameJam_2025_1
             m_puzzleLayout.Initialize();
             m_gizmoHandler.Close();
             StartEditing();
+            StartLayout();
         }
 
         private void UpdatePlaybackSpeed(float playbackSpeed)
