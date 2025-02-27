@@ -41,6 +41,15 @@ namespace SLC_GameJam_2025_1
             }
         }
 
+        private void Awake()
+        {
+            m_playbackSpeedSlider.value = m_playbackSpeed;
+            m_playbackSpeedSlider.onValueChanged.AddListener(UpdatePlaybackSpeed);
+            m_puzzleLayout.Initialize();
+            m_gizmoHandler.Close();
+            StartLayout();
+        }
+
         private void HandleLayerChangeInputs()
         {
             if (m_selectedPiece)
@@ -119,7 +128,7 @@ namespace SLC_GameJam_2025_1
             m_uiLayouts.Initialize();
             m_uiLayouts.SetVisible("Editor UI");
             m_leakParticles.gameObject.SetActive(false);
-            ResetView();
+            UpdateLayerView();
             foreach (PuzzlePiece puzzlePiece in m_puzzleLayout)
             {
                 puzzlePiece.SetFluidProgress(0);
@@ -130,18 +139,10 @@ namespace SLC_GameJam_2025_1
         {
             m_selectedLayer = 0;
 
+            StartEditing();
             UpdateLayerView();
         }
 
-        private void Awake()
-        {
-            m_playbackSpeedSlider.value = m_playbackSpeed;
-            m_playbackSpeedSlider.onValueChanged.AddListener(UpdatePlaybackSpeed);
-            m_puzzleLayout.Initialize();
-            m_gizmoHandler.Close();
-            StartEditing();
-            StartLayout();
-        }
 
         private void UpdatePlaybackSpeed(float playbackSpeed)
         {
