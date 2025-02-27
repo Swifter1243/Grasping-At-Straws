@@ -12,6 +12,7 @@ namespace SLC_GameJam_2025_1
 		private float m_startAngle;
 		private PuzzlePiece m_activePiece;
 		private Quaternion m_startRotation;
+		private Vector3 m_lastClickPosition;
 
 		public void Initialize(Color axisColor)
 		{
@@ -29,7 +30,7 @@ namespace SLC_GameJam_2025_1
 		{
 			m_startRotation = m_activePiece.transform.rotation;
 			m_meshRenderer.material.SetInt(s_inUse, 1);
-			Vector2 clickPosition = GetClickPosition(ray);
+			Vector2 clickPosition = GetClickPosition(ray) ?? Vector2.zero;
 			m_startAngle = GetAngleFromClickPosition(clickPosition);
 		}
 
@@ -38,7 +39,7 @@ namespace SLC_GameJam_2025_1
 			return Mathf.Atan2(clickPosition.y, clickPosition.x) * Mathf.Rad2Deg;
 		}
 
-		private Vector2 GetClickPosition(Ray ray)
+		private Vector2? GetClickPosition(Ray ray)
 		{
 			Plane plane = new(transform.up, transform.position);
 			if (plane.Raycast(ray, out float enter))
@@ -47,7 +48,7 @@ namespace SLC_GameJam_2025_1
 				Vector3 localPoint = transform.InverseTransformPoint(worldPoint);
 				return new Vector2(localPoint.x, localPoint.z);
 			}
-			return Vector2.zero;
+			return null;
 		}
 
 		public void SetUnfocused()
@@ -63,7 +64,8 @@ namespace SLC_GameJam_2025_1
 
 		public void UpdateClickPosition(Ray ray)
 		{
-			Vector2 clickPosition = GetClickPosition(ray);
+			Vector2 clickPosition = GetClickPosition(ray) ?? m_lastClickPosition;
+			m_lastClickPosition = clickPosition;
 			SetClickPosition(clickPosition);
 			float angle = GetAngleFromClickPosition(clickPosition);
 			float deltaAngle = angle - m_startAngle;
