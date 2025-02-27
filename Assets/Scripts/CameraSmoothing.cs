@@ -66,15 +66,12 @@ namespace SLC_GameJam_2025_1
 
             if (Input.GetMouseButton(1))
             {
-                Vector3 mouseDelta = Input.mousePosition - m_lastMousePosition;
-                m_lastMousePosition = Input.mousePosition;
+                Vector2 movement = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * m_lookSensitivity;
 
-                if (mouseDelta.magnitude > 0)
+                if (movement.magnitude > 0)
                 {
                     onRotationChanged?.Invoke();
                 }
-
-                Vector2 movement = mouseDelta.normalized * (Time.deltaTime * m_lookSensitivity);
 
                 m_targetRotation = Quaternion.Euler(0, movement.x, 0) * m_targetRotation;
                 m_targetRotation *= Quaternion.Euler(-movement.y, 0, 0);
