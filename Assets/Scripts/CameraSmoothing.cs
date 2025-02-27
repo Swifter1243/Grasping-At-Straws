@@ -57,7 +57,7 @@ namespace SLC_GameJam_2025_1
             if (Input.mouseScrollDelta.y != 0)
             {
                 m_distanceFactor -= Input.mouseScrollDelta.y * m_scrollSensitivity;
-                m_distanceFactor = Mathf.Clamp(m_distanceFactor, 0.8f, 2);
+                m_distanceFactor = Mathf.Clamp(m_distanceFactor, 0.4f, 2);
             }
 
             if (Input.GetMouseButton(1))
