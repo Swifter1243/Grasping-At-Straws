@@ -8,7 +8,7 @@ namespace SLC_GameJam_2025_1
         public Transform m_input1;
         public Transform m_input2;
         public MeshRenderer m_meshRenderer;
-        private Collider m_collider;
+        public Collider m_collider;
 
         private readonly static Color s_input1Color = new(0, 0.5f, 0.4f);
         private readonly static Color s_input2Color = new(1, 0.4f, 0);
@@ -17,11 +17,6 @@ namespace SLC_GameJam_2025_1
         private readonly static int s_opacity = Shader.PropertyToID("_Opacity");
         private readonly static int s_outlineColor = Shader.PropertyToID("_OutlineColor");
         private static readonly int s_hovered = Shader.PropertyToID("_Hovered");
-
-        private void Awake()
-        {
-            m_collider = GetComponent<Collider>();
-        }
 
         private void OnDrawGizmos()
         {
@@ -54,6 +49,11 @@ namespace SLC_GameJam_2025_1
             m_meshRenderer.material.SetInt(s_hovered, hovered ? 1 : 0);
         }
 
+        public void SetInteractable(bool interactable)
+        {
+            m_collider.enabled = interactable;
+        }
+
         public Vector3Int Input1DirectionOut => GetChildBoardDirection(m_input1);
         public Vector3Int Input1DirectionIn => GetChildBoardDirection(m_input1) * -1;
         public Vector3Int Input2DirectionOut => GetChildBoardDirection(m_input2);
@@ -75,13 +75,13 @@ namespace SLC_GameJam_2025_1
         public void Select()
         {
             SetOutlineColor(new Color(0, 1, 1, 0.5f));
-            m_collider.enabled = false;
+            SetInteractable(false);
         }
 
         public void Deselect()
         {
             SetOutlineColor(new Color(0, 1, 1, 0));
-            m_collider.enabled = true;
+            SetInteractable(true);
         }
     }
 }

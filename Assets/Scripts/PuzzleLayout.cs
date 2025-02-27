@@ -13,7 +13,7 @@ namespace SLC_GameJam_2025_1
         public PuzzlePiece[] m_unsafePieces;
         public PuzzleInput m_in;
         public PuzzleInput m_out;
-        
+
         // Parsed
         private Dictionary<Vector3Int, PuzzlePiece> m_internalPieces;
 
@@ -31,9 +31,17 @@ namespace SLC_GameJam_2025_1
                 puzzlePiece.SetOpacity(opacity);
             }
         }
-        
+
         private int Volume => m_dimensions.x * m_dimensions.y * m_dimensions.z;
         public Bounds BoundingBox => new(transform.position + (m_dimensions - Vector3.one) / 2f, m_dimensions);
+
+        public Bounds GetBoundingBoxAtLayer(int layer)
+        {
+            Bounds bounds = BoundingBox;
+            bounds.center = new Vector3(bounds.center.x, layer, bounds.center.z);
+            bounds.size = new Vector3(m_dimensions.x, 1, m_dimensions.z);
+            return bounds;
+        }
 
         private IEnumerable<KeyValuePair<Vector3Int, PuzzlePiece>> InitializePieces(PuzzlePiece[] pieces)
         {
@@ -59,7 +67,7 @@ namespace SLC_GameJam_2025_1
         public PuzzleSolution Solve()
         {
             PuzzleSolution solution = new();
-            
+
             Vector3Int searchPoint = m_in.BoardPosition;
             Vector3Int searchDirection = m_in.BoardDirection;
             PuzzleSolution.Entry last = new();
@@ -85,7 +93,7 @@ namespace SLC_GameJam_2025_1
                 {
                     searchDirection = puzzlePiece.GetDirectionOut(searchDirection, out bool enteredInput1);
                     searchPoint = puzzlePiece.BoardPosition;
-                    
+
                     PuzzleSolution.Entry entry = new()
                     {
                         m_piece = puzzlePiece,
@@ -111,7 +119,7 @@ namespace SLC_GameJam_2025_1
         private PuzzleObject GetObjectFromDirection(Vector3Int position, Vector3Int direction)
         {
             Vector3Int nextPosition = position + direction;
-            
+
             bool outOfBoundsX = nextPosition.x < 0 || nextPosition.x >= m_dimensions.x;
             bool outOfBoundsY = nextPosition.y < 0 || nextPosition.y >= m_dimensions.y;
             bool outOfBoundsZ = nextPosition.z < 0 || nextPosition.z >= m_dimensions.z;
@@ -121,7 +129,7 @@ namespace SLC_GameJam_2025_1
             {
                 return nextPosition == m_out.BoardPosition ? m_out : null;
             }
-            
+
             PuzzlePiece piece = this[nextPosition];
 
             if (piece == null || !piece.AcceptsDirection(direction))
@@ -139,5 +147,5 @@ namespace SLC_GameJam_2025_1
 
         public IEnumerator<PuzzlePiece> GetEnumerator() => m_internalPieces.Values.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-    }   
+    }
 }

@@ -12,8 +12,6 @@ namespace SLC_GameJam_2025_1
         public ParticleSystem m_leakParticles;
         public CameraSmoothing m_cameraSmoothing;
         public ObjectVisibilityList m_uiLayouts;
-        public Slider m_playbackSpeedSlider;
-        private float m_playbackSpeed = 0.6f;
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
@@ -30,6 +28,52 @@ namespace SLC_GameJam_2025_1
         private PuzzlePiece m_selectedPiece = null;
         private PuzzlePiece m_hoveredPiece = null;
         private PuzzleSolution m_currentSolution = null;
+        public Slider m_playbackSpeedSlider;
+        private float m_playbackSpeed = 0.6f;
+        private int m_selectedLayer = 0;
+        private Bounds m_focusBounds;
+
+        private void Update()
+        {
+            if (m_state == State.Editing)
+            {
+                HandleLayerChangeInputs();
+            }
+        }
+
+        private void HandleLayerChangeInputs()
+        {
+            if (m_selectedPiece)
+                return;
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                ChangeSelectedLayer(Math.Max(m_selectedLayer - 1, 0));
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                ChangeSelectedLayer(Math.Min(m_selectedLayer + 1, m_puzzleLayout.m_dimensions.y - 1));
+            }
+        }
+
+        private void ChangeSelectedLayer(int layer)
+        {
+            m_selectedLayer = layer;
+            UpdateLayerView();
+        }
+
+        private void UpdateLayerView()
+        {
+            foreach (PuzzlePiece puzzlePiece in m_puzzleLayout)
+            {
+                bool onFloor = puzzlePiece.BoardPosition.y == m_selectedLayer;
+                puzzlePiece.SetOpacity(onFloor ? FOCUSED_OPACITY : UNFOCUSED_OPACITY);
+                puzzlePiece.SetInteractable(onFloor);
+            }
+
+            m_focusBounds = m_puzzleLayout.GetBoundingBoxAtLayer(m_selectedLayer);
+            ResetView();
+        }
 
         public void HoverPiece(PuzzlePiece piece)
         {
@@ -62,6 +106,7 @@ namespace SLC_GameJam_2025_1
             if (!m_selectedPiece)
                 return;
 
+            m_gizmoHandler.Close();
             ResetView();
             m_selectedPiece.Deselect();
             m_selectedPiece = null;
@@ -75,9 +120,9 @@ namespace SLC_GameJam_2025_1
             m_uiLayouts.SetVisible("Editor UI");
             m_leakParticles.gameObject.SetActive(false);
 
+            UpdateLayerView();
             foreach (PuzzlePiece puzzlePiece in m_puzzleLayout)
             {
-                puzzlePiece.SetOpacity(FOCUSED_OPACITY);
                 puzzlePiece.SetFluidProgress(0);
             }
         }
@@ -88,7 +133,6 @@ namespace SLC_GameJam_2025_1
             m_playbackSpeedSlider.onValueChanged.AddListener(UpdatePlaybackSpeed);
             m_puzzleLayout.Initialize();
             StartEditing();
-            ResetView();
         }
 
         private void UpdatePlaybackSpeed(float playbackSpeed)
@@ -98,8 +142,7 @@ namespace SLC_GameJam_2025_1
 
         private void ResetView()
         {
-            m_gizmoHandler.Close();
-            m_cameraSmoothing.SetFromBounds(m_puzzleLayout.BoundingBox);
+            m_cameraSmoothing.SetFromBounds(m_focusBounds);
         }
 
         public void FastForward()

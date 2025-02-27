@@ -50,6 +50,7 @@ MonoBehaviour:
   m_input1: {fileID: 3579039710037931213}
   m_input2: {fileID: 5720276404072968616}
   m_meshRenderer: {fileID: 0}
+  m_collider: {fileID: 832514985013033736}
 --- !u!65 &832514985013033736
 BoxCollider:
   m_ObjectHideFlags: 0
