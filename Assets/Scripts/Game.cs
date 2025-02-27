@@ -231,6 +231,7 @@ namespace SLC_GameJam_2025_1
         private void StartPuzzleGameplay()
         {
             m_currentPuzzle.Initialize();
+            m_gizmoHandler.Make3D(m_currentPuzzle.m_is3D);
             m_selectedLayer = 0;
 
             StartEditing();

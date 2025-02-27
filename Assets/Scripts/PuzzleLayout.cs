@@ -9,6 +9,7 @@ namespace SLC_GameJam_2025_1
     public class PuzzleLayout : MonoBehaviour, IEnumerable<PuzzlePiece>
     {
         // Inspector
+        public bool m_is3D = false;
         public Vector3Int m_dimensions;
         public PuzzleInput m_in;
         public PuzzleInput m_out;

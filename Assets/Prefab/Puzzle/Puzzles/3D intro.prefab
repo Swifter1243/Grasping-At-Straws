@@ -125,6 +125,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7243293454963023002, guid: 34e1cc607254b4c46947e765fed0a8cc, type: 3}
+      propertyPath: m_is3D
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7243293454963023002, guid: 34e1cc607254b4c46947e765fed0a8cc, type: 3}
       propertyPath: m_dimensions.x
       value: 3
       objectReference: {fileID: 0}

@@ -27,6 +27,12 @@ namespace SLC_GameJam_2025_1
 			m_zAxis.Initialize(Color.blue);
 		}
 
+		public void Make3D(bool is3D)
+		{
+			m_xAxis.gameObject.SetActive(is3D);
+			m_zAxis.gameObject.SetActive(is3D);
+		}
+
 		public void StartUsing(RotationGizmo rotationGizmo, Ray ray)
 		{
 			foreach (RotationGizmo gizmo in GetRotationGizmos())
