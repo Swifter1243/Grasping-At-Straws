@@ -74,6 +74,7 @@ namespace SLC_GameJam_2025_1
 
             m_currentPuzzle = Instantiate(m_puzzles[m_currentPuzzleIndex++], m_puzzleHolder);
             m_currentPuzzle.transform.localPosition = -m_currentPuzzle.Center;
+            m_cameraSmoothing.SetFromBounds(m_currentPuzzle.BoundingBox);
             StartCoroutine(TransitionIn());
         }
 
