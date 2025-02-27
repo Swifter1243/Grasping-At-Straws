@@ -131,7 +131,7 @@ namespace SLC_GameJam_2025_1
 
             if (piece == null || !piece.AcceptsDirection(direction))
             {
-                return null;
+                return nextPosition == m_out.BoardPosition ? m_out : null;
             }
 
             return piece;
