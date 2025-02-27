@@ -32,12 +32,11 @@
 
             struct appdata {
                 float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
             };
 
             struct v2f {
-                float2 centerUV : TEXCOORD0;
-                float2 targetUV : TEXCOORD1;
+                float3 localPos : TEXCOORD0;
+                float3 targetPos : TEXCOORD1;
                 float4 vertex : SV_POSITION;
             };
 
@@ -52,25 +51,23 @@
             v2f vert(appdata v)
             {
                 v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
 
                 float3 localCamPos = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, 1));
-                float2 centerUV = v.uv * 2 - 1;
-                float2 camPosUV = localCamPos.xz;
-                float2 targetUV = _InUse ? _ClickPosition : camPosUV;
+                float3 targetPos = _InUse ? float3(_ClickPosition.x, 0, _ClickPosition.y) : localCamPos;
 
-                o.centerUV = centerUV;
-                o.targetUV = targetUV;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                o.localPos = -v.vertex * 0.2;
+                o.targetPos = targetPos;
 
                 return o;
             }
 
             fixed4 frag(v2f i) : SV_Target
             {
-                float alignment = dot(normalize(-i.centerUV), normalize(i.targetUV));
+                float alignment = dot(normalize(-i.localPos), normalize(i.targetPos));
                 float viewAlignment = smoothstep(_HandleStart, 1, alignment);
 
-                float handleDist = abs(_HandleRadius - length(i.centerUV));
+                float handleDist = abs(_HandleRadius - length(i.localPos.xz));
                 float handleCircle = 1 - step(_HandleWidth + _InUse * _HandleWidth, handleDist);
                 float handle = handleCircle * viewAlignment;
 
