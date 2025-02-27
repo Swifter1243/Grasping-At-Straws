@@ -33,14 +33,11 @@ namespace SLC_GameJam_2025_1
         }
 
         private int Volume => m_dimensions.x * m_dimensions.y * m_dimensions.z;
-        public Bounds BoundingBox => new(transform.position + (m_dimensions - Vector3.one) / 2f, m_dimensions);
+        public Bounds BoundingBox => new(Vector3.zero, m_dimensions);
 
         public Bounds GetBoundingBoxAtLayer(int layer)
         {
-            Bounds bounds = BoundingBox;
-            bounds.center = new Vector3(bounds.center.x, layer, bounds.center.z);
-            bounds.size = new Vector3(m_dimensions.x, 1, m_dimensions.z);
-            return bounds;
+            return new Bounds(new Vector3(0, layer, 0), new Vector3(m_dimensions.x, 1, m_dimensions.z));
         }
 
         private IEnumerable<KeyValuePair<Vector3Int, PuzzlePiece>> InitializePieces(PuzzlePiece[] pieces)
@@ -142,7 +139,7 @@ namespace SLC_GameJam_2025_1
 
         private void OnDrawGizmos()
         {
-            Gizmos.DrawWireCube(BoundingBox.center, BoundingBox.size);
+            Gizmos.DrawWireCube(m_dimensions / 2, m_dimensions);
         }
 
         public IEnumerator<PuzzlePiece> GetEnumerator() => m_internalPieces.Values.GetEnumerator();
