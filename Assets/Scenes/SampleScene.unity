@@ -6183,6 +6183,14 @@ PrefabInstance:
       value: Use The Arrows To Rotate Pieces
       objectReference: {fileID: 0}
     - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
@@ -6212,7 +6220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8985938890248023940, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 336.87
+      value: 288.3
       objectReference: {fileID: 0}
     - target: {fileID: 8985938890248023940, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6298,6 +6306,14 @@ PrefabInstance:
       value: Zoom with Scroll Wheel
       objectReference: {fileID: 0}
     - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
@@ -6327,7 +6343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8985938890248023940, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 336.87
+      value: 250.8
       objectReference: {fileID: 0}
     - target: {fileID: 8985938890248023940, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6480,6 +6496,14 @@ PrefabInstance:
     - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_text
       value: Select Pieces with Left Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_HorizontalAlignment
@@ -6829,6 +6853,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1333052738}
     m_Modifications:
+    - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 4293407799047164572, guid: c7757c9750f4a5f43937846ea18ee9bd, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
