@@ -680,6 +680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb13b645cce43c2a00e72e215d41a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_gizmoHandler: {fileID: 782838696}
   m_puzzleLayout: {fileID: 656784669}
   m_leakParticles: {fileID: 1885190514}
   m_cameraSmoothing: {fileID: 963194229}

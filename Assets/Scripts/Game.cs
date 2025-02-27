@@ -7,6 +7,7 @@ namespace SLC_GameJam_2025_1
 {
     public class Game : MonoBehaviour
     {
+        public GizmoHandler m_gizmoHandler;
         public PuzzleLayout m_puzzleLayout;
         public ParticleSystem m_leakParticles;
         public CameraSmoothing m_cameraSmoothing;
@@ -33,6 +34,7 @@ namespace SLC_GameJam_2025_1
         {
             DeselectPiece();
             piece.Select();
+            m_gizmoHandler.Open(piece);
             m_selectedPiece = piece;
             m_cameraSmoothing.m_targetPivot = piece.transform.position;
             m_cameraSmoothing.m_targetDistance = 2;
@@ -54,7 +56,7 @@ namespace SLC_GameJam_2025_1
             m_uiLayouts.Initialize();
             m_uiLayouts.SetVisible("Editor UI");
             m_leakParticles.gameObject.SetActive(false);
-            
+
             foreach (PuzzlePiece puzzlePiece in m_puzzleLayout)
             {
                 puzzlePiece.SetOpacity(FOCUSED_OPACITY);
@@ -78,6 +80,7 @@ namespace SLC_GameJam_2025_1
 
         private void ResetView()
         {
+            m_gizmoHandler.Close();
             m_cameraSmoothing.SetFromBounds(m_puzzleLayout.BoundingBox);
         }
 

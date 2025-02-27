@@ -56,5 +56,16 @@ namespace SLC_GameJam_2025_1
 			}
 			m_inUseGizmo = null;
 		}
+
+		public void Open(PuzzlePiece piece)
+		{
+			gameObject.SetActive(true);
+			transform.position = piece.transform.position;
+		}
+
+		public void Close()
+		{
+			gameObject.SetActive(false);
+		}
 	}
 }
