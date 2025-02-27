@@ -15,9 +15,10 @@
         Tags
         {
             "RenderType"="Transparent"
-            "Queue"="Transparent"
+            "Queue"="Transparent+1"
         }
         ZTest Always
+        ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha
         Cull Off
 

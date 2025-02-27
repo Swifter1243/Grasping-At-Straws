@@ -7,6 +7,7 @@ namespace SLC_GameJam_2025_1
     {
         private Camera m_camera;
         public Game m_game;
+        public GizmoHandler m_gizmoHandler;
 
         private void Awake()
         {
@@ -30,12 +31,34 @@ namespace SLC_GameJam_2025_1
             {
                 OnLeftClick();
             }
+            if (Input.GetMouseButton(0))
+            {
+                OnLeftClickHeld();
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                OnLeftClickReleased();
+            }
+        }
+
+        private void OnLeftClickHeld()
+        {
+            m_gizmoHandler.UpdateGizmoInteraction(GetMouseRay());
+        }
+
+        private void OnLeftClickReleased()
+        {
+            m_gizmoHandler.StopUsing();
+        }
+
+        private Ray GetMouseRay()
+        {
+            return m_camera.ScreenPointToRay(Input.mousePosition);
         }
 
         private void OnLeftClick()
         {
-            Ray ray = m_camera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 100))
+            if (Physics.Raycast(GetMouseRay(), out RaycastHit hit, 100))
             {
                 OnHit(hit);
             }
@@ -51,6 +74,11 @@ namespace SLC_GameJam_2025_1
             {
                 PuzzlePiece piece = hit.transform.GetComponent<PuzzlePiece>();
                 m_game.SelectPiece(piece);
+            }
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Rotation Gizmo"))
+            {
+                RotationGizmo rotationGizmo = hit.transform.GetComponent<RotationGizmo>();
+                m_gizmoHandler.StartUsing(rotationGizmo);
             }
         }
     }
