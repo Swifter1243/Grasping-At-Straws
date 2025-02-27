@@ -4,6 +4,7 @@
     {
         [Toggle(CORNER)] _IsCorner ("Is Corner", Int) = 0
         [ToggleUI] _FlipFluid ("Flip Fluid", Int) = 0
+        [ToggleUI] _Hovered ("Hovered", Int) = 0
         _Color ("Color", Color) = (1, 1, 1)
         _WaterColor ("Water Color", Color) = (1, 1, 1)
         _FluidProgress ("Fluid Progress", Range(0, 1)) = 0
@@ -22,7 +23,7 @@
         Pass
         {
             Cull Off
-            
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -49,6 +50,8 @@
             float _FluidProgress;
             float _Opacity;
             bool _FlipFluid;
+            bool _Hovered;
+            float4 _OutlineColor;
 
             v2f vert(appdata v)
             {
@@ -83,7 +86,7 @@
 
                 bool inSegment1 = segment1 < 1;
                 bool inSegment3 = segment3 < 1;
-                
+
                 return inSegment1 ? lerp(0, edge1, segment1) // segment 1
                 : inSegment3 ? lerp(edge2, 1, 1 - segment3) // segment 3
                 : lerp(edge1, edge2, segment2); // segment 2
@@ -96,15 +99,15 @@
             {
                 float sunD = dot(i.normal, SUN_DIRECTION);
                 float lighting = sunD * 0.5 + 0.5;
-                
+
                 float specularD = dot(i.reflection, SUN_DIRECTION);
-                
+
                 lighting += pow(max(0.03, specularD * max(0, sunD)), 16) * 20;
-                
+
                 float fluidPosition = _FlipFluid ? getFluidPosition(i) : 1 - getFluidPosition(i);
 
                 float waveAmount = smoothstep(0.5, 0.2, abs(_FluidProgress - 0.5));
-                
+
                 #if CORNER
                 float waveAxis = i.localPos.y;
                 #else
@@ -114,11 +117,14 @@
                 float waveOffset = wave * 0.03;
 
                 fluidPosition += waveOffset * waveAmount;
-                
+
                 float p = _FluidProgress * 1.01 - fluidPosition;
                 float waterAmount = step(0.01, p);
 
-                float3 col = lerp(_Color, _WaterColor, waterAmount);
+                float3 normalCol = _Color;
+                normalCol += _OutlineColor.rgb * _Hovered * 0.4;
+
+                float3 col = lerp(normalCol, _WaterColor, waterAmount);
 
                 return float4(col * lighting, max(_Opacity, waterAmount));
             }
@@ -127,7 +133,7 @@
         Pass
         {
             Cull Off
-            
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag

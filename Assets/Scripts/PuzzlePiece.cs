@@ -16,6 +16,7 @@ namespace SLC_GameJam_2025_1
         private readonly static int s_flipFluid = Shader.PropertyToID("_FlipFluid");
         private readonly static int s_opacity = Shader.PropertyToID("_Opacity");
         private readonly static int s_outlineColor = Shader.PropertyToID("_OutlineColor");
+        private static readonly int s_hovered = Shader.PropertyToID("_Hovered");
 
         private void Awake()
         {
@@ -47,14 +48,19 @@ namespace SLC_GameJam_2025_1
         {
             m_meshRenderer.material.SetColor(s_outlineColor, outlineColor);
         }
-        
+
+        public void SetHovered(bool hovered)
+        {
+            m_meshRenderer.material.SetInt(s_hovered, hovered ? 1 : 0);
+        }
+
         public Vector3Int Input1DirectionOut => GetChildBoardDirection(m_input1);
         public Vector3Int Input1DirectionIn => GetChildBoardDirection(m_input1) * -1;
         public Vector3Int Input2DirectionOut => GetChildBoardDirection(m_input2);
         public Vector3Int Input2DirectionIn => GetChildBoardDirection(m_input2) * -1;
-        
+
         public bool AcceptsDirection(Vector3Int direction) => direction == Input1DirectionIn || direction == Input2DirectionIn;
-        
+
         public Vector3Int GetDirectionOut(Vector3Int directionIn, out bool usingInput1)
         {
             if (!AcceptsDirection(directionIn))
@@ -68,13 +74,13 @@ namespace SLC_GameJam_2025_1
 
         public void Select()
         {
-            SetOutlineColor(new Color(0, 1, 1, 0.2f));
+            SetOutlineColor(new Color(0, 1, 1, 0.5f));
             m_collider.enabled = false;
         }
 
         public void Deselect()
         {
-            SetOutlineColor(new Color(0, 0, 0, 0));
+            SetOutlineColor(new Color(0, 1, 1, 0));
             m_collider.enabled = true;
         }
     }

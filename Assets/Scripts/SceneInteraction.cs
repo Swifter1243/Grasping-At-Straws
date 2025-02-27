@@ -27,6 +27,8 @@ namespace SLC_GameJam_2025_1
             if (!m_camera)
                 return;
 
+            OnEditUpdate();
+
             if (Input.GetMouseButtonDown(0))
             {
                 OnLeftClick();
@@ -38,6 +40,18 @@ namespace SLC_GameJam_2025_1
             if (Input.GetMouseButtonUp(0))
             {
                 OnLeftClickReleased();
+            }
+        }
+
+        private void OnEditUpdate()
+        {
+            if (Physics.Raycast(GetMouseRay(), out RaycastHit hit, 100))
+            {
+                OnEditUpdateHit(hit);
+            }
+            else
+            {
+                m_game.UnHoverPiece();
             }
         }
 
@@ -60,7 +74,7 @@ namespace SLC_GameJam_2025_1
         {
             if (Physics.Raycast(GetMouseRay(), out RaycastHit hit, 100))
             {
-                OnHit(hit);
+                OnLeftClickHit(hit);
             }
             else
             {
@@ -68,7 +82,7 @@ namespace SLC_GameJam_2025_1
             }
         }
 
-        private void OnHit(RaycastHit hit)
+        private void OnLeftClickHit(RaycastHit hit)
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Pipe"))
             {
@@ -79,6 +93,15 @@ namespace SLC_GameJam_2025_1
             {
                 RotationGizmo rotationGizmo = hit.transform.GetComponent<RotationGizmo>();
                 m_gizmoHandler.StartUsing(rotationGizmo, GetMouseRay());
+            }
+        }
+
+        private void OnEditUpdateHit(RaycastHit hit)
+        {
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Pipe"))
+            {
+                PuzzlePiece piece = hit.transform.GetComponent<PuzzlePiece>();
+                m_game.HoverPiece(piece);
             }
         }
     }

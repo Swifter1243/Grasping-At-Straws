@@ -28,7 +28,24 @@ namespace SLC_GameJam_2025_1
         public State m_state = State.Editing;
         private float m_pipeProgress = 0;
         private PuzzlePiece m_selectedPiece = null;
+        private PuzzlePiece m_hoveredPiece = null;
         private PuzzleSolution m_currentSolution = null;
+
+        public void HoverPiece(PuzzlePiece piece)
+        {
+            UnHoverPiece();
+            m_hoveredPiece = piece;
+            m_hoveredPiece.SetHovered(true);
+        }
+
+        public void UnHoverPiece()
+        {
+            if (m_hoveredPiece == null)
+                return;
+
+            m_hoveredPiece.SetHovered(false);
+            m_hoveredPiece = null;
+        }
 
         public void SelectPiece(PuzzlePiece piece)
         {
@@ -42,12 +59,13 @@ namespace SLC_GameJam_2025_1
 
         public void DeselectPiece()
         {
-            if (m_selectedPiece != null)
-            {
-                ResetView();
-                m_selectedPiece.Deselect();
-                m_selectedPiece = null;
-            }
+            if (!m_selectedPiece)
+                return;
+
+            ResetView();
+            m_selectedPiece.Deselect();
+            m_selectedPiece = null;
+            UnHoverPiece();
         }
 
         public void StartEditing()
