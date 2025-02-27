@@ -89,5 +89,5 @@ Material:
     - _HoverColor: {r: 0, g: 1, b: 0.8174324, a: 1}
     - _OutlineColor: {r: 0, g: 1, b: 1, a: 0}
     - _StripColor: {r: 0.858, g: 0.63897294, b: 0.63897294, a: 1}
-    - _WaterColor: {r: 0.2980392, g: 0.83495927, b: 1, a: 1}
+    - _WaterColor: {r: 1, g: 0.2980392, b: 0.34978437, a: 1}
   m_BuildTextureStacks: []
