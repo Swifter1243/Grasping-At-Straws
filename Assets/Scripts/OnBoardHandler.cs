@@ -10,6 +10,7 @@ namespace SLC_GameJam_2025_1
         public Game m_game;
         public GizmoHandler m_gizmoHandler;
         public CameraSmoothing m_cameraSmoothing;
+        public ObjectVisibilityList m_uiLayouts;
         public OnBoardingUI m_panning;
         public OnBoardingUI m_scrolling;
         public OnBoardingUI m_selectPieces;
@@ -46,6 +47,7 @@ namespace SLC_GameJam_2025_1
         {
             UnityEvent onComplete = m_rotatePieces.Setup();
             m_gizmoHandler.onGizmoUsed += () => onComplete.Invoke();
+            m_rotatePieces.onFinished += () => m_uiLayouts.SetVisible("Editor UI");
         }
 
         private void SetupLayers()

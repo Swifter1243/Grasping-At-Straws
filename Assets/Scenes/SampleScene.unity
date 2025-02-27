@@ -10309,6 +10309,7 @@ MonoBehaviour:
   m_game: {fileID: 727688844}
   m_gizmoHandler: {fileID: 782838696}
   m_cameraSmoothing: {fileID: 963194229}
+  m_uiLayouts: {fileID: 971066485}
   m_panning: {fileID: 1333052739}
   m_scrolling: {fileID: 403326973}
   m_selectPieces: {fileID: 249200366}

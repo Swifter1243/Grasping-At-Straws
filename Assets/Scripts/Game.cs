@@ -247,7 +247,10 @@ namespace SLC_GameJam_2025_1
         {
             m_state = State.Editing;
             m_uiLayouts.Initialize();
-            m_uiLayouts.SetVisible("Editor UI");
+            if (m_currentPuzzle.m_onBoardingType != OnBoardingType.BasicControls)
+            {
+                m_uiLayouts.SetVisible("Editor UI");
+            }
             m_leakParticles.gameObject.SetActive(false);
             UpdateLayerView();
             foreach (PuzzlePiece puzzlePiece in m_currentPuzzle)
