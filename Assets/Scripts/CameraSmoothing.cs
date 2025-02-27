@@ -19,6 +19,9 @@ namespace SLC_GameJam_2025_1
         private Vector3 m_pivot = Vector3.zero;
         private Quaternion m_rotation = Quaternion.identity;
         private Vector3 m_lastMousePosition = Vector3.zero;
+        
+        public event Action onDistanceChanged;
+        public event Action onRotationChanged;
 
         // https://www.gamedeveloper.com/programming/improved-lerp-smoothing-
         private static float LerpSmooth(float target, float value, float dt, float rate)
@@ -56,6 +59,7 @@ namespace SLC_GameJam_2025_1
 
             if (Input.mouseScrollDelta.y != 0)
             {
+                onDistanceChanged?.Invoke();
                 m_distanceFactor -= Input.mouseScrollDelta.y * m_scrollSensitivity;
                 m_distanceFactor = Mathf.Clamp(m_distanceFactor, 0.4f, 2);
             }
@@ -64,6 +68,11 @@ namespace SLC_GameJam_2025_1
             {
                 Vector3 mouseDelta = Input.mousePosition - m_lastMousePosition;
                 m_lastMousePosition = Input.mousePosition;
+
+                if (mouseDelta.magnitude > 0)
+                {
+                    onRotationChanged?.Invoke();
+                }
 
                 Vector2 movement = mouseDelta.normalized * (Time.deltaTime * m_lookSensitivity);
 

@@ -9,6 +9,7 @@ namespace SLC_GameJam_2025_1
 		public RotationGizmo m_xAxis;
 		public RotationGizmo m_yAxis;
 		public RotationGizmo m_zAxis;
+		public event Action onGizmoUsed;
 
 		private RotationGizmo m_inUseGizmo;
 		private PuzzlePiece m_activePiece;
@@ -56,6 +57,8 @@ namespace SLC_GameJam_2025_1
 		{
 			if (!m_inUseGizmo)
 				return;
+			
+			onGizmoUsed?.Invoke();
 
 			foreach (RotationGizmo gizmo in GetRotationGizmos())
 			{

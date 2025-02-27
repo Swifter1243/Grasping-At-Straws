@@ -17,9 +17,12 @@ namespace SLC_GameJam_2025_1
         public ObjectVisibilityList m_uiLayouts;
         public float m_transitionInTime = 1.5f;
         public float m_transitionOutTime = 1.5f;
+        public event Action<PuzzleLayout> onNewPuzzleStarted;
+        public event Action onPieceSelected;
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
+
 
         public enum State
         {
@@ -221,6 +224,7 @@ namespace SLC_GameJam_2025_1
             m_selectedPiece = piece;
             m_cameraSmoothing.m_targetPivot = piece.transform.position;
             m_cameraSmoothing.m_targetDistance = m_currentPuzzle.BoundingBox.GetMaxAxis() * 2;
+            onPieceSelected?.Invoke();
         }
 
         public void DeselectPiece()
@@ -253,6 +257,7 @@ namespace SLC_GameJam_2025_1
             m_currentPuzzle.Initialize();
             m_gizmoHandler.Make3D(m_currentPuzzle.m_is3D);
             m_selectedLayer = 0;
+            onNewPuzzleStarted?.Invoke(m_currentPuzzle);
 
             StartEditing();
             UpdateLayerView();
