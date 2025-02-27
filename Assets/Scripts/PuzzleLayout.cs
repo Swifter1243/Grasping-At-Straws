@@ -2,19 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace SLC_GameJam_2025_1
 {
     public class PuzzleLayout : MonoBehaviour, IEnumerable<PuzzlePiece>
     {
-        // Inspector
         public bool m_is3D = false;
         public Vector3Int m_dimensions;
         public PuzzleInput m_in;
         public PuzzleInput m_out;
 
-        // Parsed
         private Dictionary<Vector3Int, PuzzlePiece> m_internalPieces;
 
         private PuzzlePiece this[Vector3Int index] => m_internalPieces.ContainsKey(index) ? m_internalPieces[index] : null;
