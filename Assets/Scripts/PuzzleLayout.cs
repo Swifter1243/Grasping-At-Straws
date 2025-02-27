@@ -38,7 +38,7 @@ namespace SLC_GameJam_2025_1
 
         public Bounds GetBoundingBoxAtLayer(int layer)
         {
-            return new Bounds(new Vector3(0, layer, 0), new Vector3(m_dimensions.x, 1, m_dimensions.z));
+            return new Bounds(new Vector3(0, layer - Center.y, 0), new Vector3(m_dimensions.x, 1, m_dimensions.z));
         }
 
         private IEnumerable<KeyValuePair<Vector3Int, PuzzlePiece>> InitializePieces(PuzzlePiece[] pieces)
