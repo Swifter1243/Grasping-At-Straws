@@ -20,13 +20,31 @@ namespace SLC_GameJam_2025_1
 			{
 				RandomizeAllPieceDirections(layout);
 			}
+			if (GUILayout.Button("Center All Pieces"))
+			{
+				CenterAllPieces(layout);
+			}
+		}
+
+		private void MarkSceneDirty()
+		{
+			EditorUtility.SetDirty(this);
+			UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(target.GameObject().scene);
+		}
+
+		private void CenterAllPieces(PuzzleLayout layout)
+		{
+			foreach (PuzzlePiece puzzlePiece in layout.GetComponentsInChildren<PuzzlePiece>())
+			{
+				puzzlePiece.transform.localPosition = Vector3Int.RoundToInt(puzzlePiece.transform.localPosition);
+			}
 		}
 
 		private float GetRandom90DegreeAngle()
 		{
 			return s_mRand.Next() % 4 * 90;
 		}
-		public void RandomizeAllPieceDirections(PuzzleLayout layout)
+		private void RandomizeAllPieceDirections(PuzzleLayout layout)
 		{
 
 			foreach (PuzzlePiece puzzlePiece in layout.GetComponentsInChildren<PuzzlePiece>())
@@ -36,8 +54,7 @@ namespace SLC_GameJam_2025_1
 					Quaternion.Euler(0, GetRandom90DegreeAngle(), 0);
 			}
 
-			EditorUtility.SetDirty(this);
-			UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(target.GameObject().scene);
+			MarkSceneDirty();
 		}
 	}
 }
