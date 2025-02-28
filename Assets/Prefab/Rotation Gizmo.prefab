@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rotationSensitivity: 2
   m_meshRenderer: {fileID: 3198873505259711278}
+  m_collider: {fileID: 8236396129557810914}
 --- !u!1 &2827358074586059632
 GameObject:
   m_ObjectHideFlags: 0

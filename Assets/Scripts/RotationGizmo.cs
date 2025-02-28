@@ -10,16 +10,35 @@ namespace SLC_GameJam_2025_1
 		private static readonly int s_opacity = Shader.PropertyToID("_Opacity");
 		private static readonly int s_axisColor = Shader.PropertyToID("_AxisColor");
 		private static readonly int s_clickPosition = Shader.PropertyToID("_ClickPosition");
+		private readonly static int s_visibility = Shader.PropertyToID("_Visibility");
 		private PuzzlePiece m_activePiece;
 		private Vector2 m_startingClickPosition;
 		private float m_lastAngle;
 		public event Action onRotationMade;
+		public Collider m_collider;
+		private Camera m_camera;
 
 		public void Initialize(Color axisColor)
 		{
 			m_meshRenderer.material.SetColor(s_axisColor, axisColor);
 			m_meshRenderer.material.SetFloat(s_opacity, 1);
 			m_meshRenderer.material.SetFloat(s_inUse, 0);
+			m_camera = Camera.main;
+		}
+
+		private void Update()
+		{
+			if (!m_camera)
+				return;
+
+			Vector3 cameraForward = m_camera.transform.forward;
+			float camAngle = Vector3.Dot(transform.up, cameraForward);
+			float visibility = Math.Abs(camAngle);
+
+			float threshold = 0.3f;
+			m_collider.enabled = visibility > threshold;
+			float materialVisibility = Mathf.Clamp01(Mathf.InverseLerp(threshold - 0.1f, threshold + 0.1f, visibility));
+			m_meshRenderer.material.SetFloat(s_visibility, materialVisibility);
 		}
 
 		public void SetActivePiece(PuzzlePiece piece)

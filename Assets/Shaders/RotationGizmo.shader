@@ -11,6 +11,7 @@
         [ToggleUI] _InUse ("In Use", Int) = 0
         _ClickPosition ("Click Position", Vector) = (1,1,0,0)
         _Opacity ("Opacity", Range(0,1)) = 1
+        _Visibility ("Visibility", Range(0,1)) = 1
     }
     SubShader
     {
@@ -51,6 +52,7 @@
             bool _InUse;
             float2 _ClickPosition;
             float _Opacity;
+            float _Visibility;
 
             v2f vert(appdata v)
             {
@@ -83,7 +85,7 @@
                 float handleCircle = 1 - step(_HandleWidth + _InUse * _HandleWidth, handleDist);
                 float handle = handleCircle * viewAlignment;
 
-                float4 regularCol = float4(_AxisColor, handle * 0.8 * _Opacity);
+                float4 regularCol = float4(_AxisColor, handle * 0.8 * _Opacity * _Visibility);
 
                 float4 inUseCol = lerp(float4(_AxisColor * 0.01, 0.8 * handleCircle), float4(_AxisColor, handleCircle), handle);
 
