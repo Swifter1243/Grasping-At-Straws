@@ -27,6 +27,7 @@ namespace SLC_GameJam_2025_1
         public AudioClip m_hoverSound;
         public AudioClip m_selectSound;
         public AudioClip m_levelWinSound;
+        public PauseMenu m_pauseMenu;
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
@@ -66,6 +67,13 @@ namespace SLC_GameJam_2025_1
             m_playbackSpeedSlider.value = m_playbackSpeed;
             m_playbackSpeedSlider.onValueChanged.AddListener(UpdatePlaybackSpeed);
             m_gizmoHandler.Close();
+        }
+
+        public void StartGame()
+        {
+            m_pauseMenu.Open();
+            m_cameraSmoothing.enabled = true;
+            NextLevel();
         }
 
         public void NextLevel()

@@ -9,6 +9,7 @@ namespace SLC_GameJam_2025_1
         public Game m_game;
         public GizmoHandler m_gizmoHandler;
         public bool m_interactionEnabled = true;
+        public bool m_scenePaused = false;
 
         private void Awake()
         {
@@ -17,7 +18,7 @@ namespace SLC_GameJam_2025_1
 
         private void Update()
         {
-            if (m_game.m_state == Game.State.Editing && m_interactionEnabled)
+            if (m_game.m_state == Game.State.Editing && m_interactionEnabled && !m_scenePaused)
             {
                 DoInteraction();
             }

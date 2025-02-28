@@ -13,6 +13,7 @@ namespace SLC_GameJam_2025_1
         protected virtual void Awake()
         {
             m_canvasGroup = GetComponent<CanvasGroup>();
+            m_canvasGroup.alpha = 0;
         }
 
         protected IEnumerator Fade(float fadeTime, float start, float end)

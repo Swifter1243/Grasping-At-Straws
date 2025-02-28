@@ -7,7 +7,6 @@ namespace SLC_GameJam_2025_1
 	public class MainMenu : Fadeable
 	{
 		public Game m_game;
-		public CameraSmoothing m_cameraSmoothing;
 		public Button m_playButton;
 		public Button m_continueButton;
 		public Button m_restartButton;
@@ -17,8 +16,7 @@ namespace SLC_GameJam_2025_1
 		{
 			StartCoroutine(Fade(0.5f, 1, 0));
 			m_canvasGroup.interactable = false;
-			m_cameraSmoothing.enabled = true;
-			m_game.NextLevel();
+			m_game.StartGame();
 		}
 
 		protected override void Awake()
@@ -42,7 +40,7 @@ namespace SLC_GameJam_2025_1
 			StartCoroutine(Fade(0.5f, 0, 1));
 		}
 
-		public void ExitGame()
+		public static void ExitGame()
 		{
 			#if UNITY_EDITOR
 			EditorApplication.ExitPlaymode();
