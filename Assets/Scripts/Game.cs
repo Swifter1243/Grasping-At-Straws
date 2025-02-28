@@ -23,6 +23,9 @@ namespace SLC_GameJam_2025_1
         public event Action onPieceSelected;
         public event Action onLayerChanged;
         public GameObject m_winAnimation;
+        public AudioSource m_sfxSource;
+        public AudioClip m_hoverSound;
+        public AudioClip m_selectSound;
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
@@ -223,6 +226,13 @@ namespace SLC_GameJam_2025_1
 
         public void HoverPiece(PuzzlePiece piece)
         {
+            if (m_hoveredPiece == piece)
+            {
+                return;
+            }
+
+            m_sfxSource.PlayOneShot(m_hoverSound);
+
             UnHoverPiece();
             m_hoveredPiece = piece;
             m_hoveredPiece.SetHovered(true);
@@ -241,6 +251,7 @@ namespace SLC_GameJam_2025_1
         {
             DeselectPiece();
             piece.Select();
+            m_sfxSource.PlayOneShot(m_selectSound);
             m_gizmoHandler.Open(piece);
             m_selectedPiece = piece;
             m_cameraSmoothing.m_targetPivot = piece.transform.position;
