@@ -10520,7 +10520,7 @@ MonoBehaviour:
   m_uiLayouts: {fileID: 971066485}
   m_transitionInTime: 2
   m_transitionOutTime: 3
-  m_winAnimation: {fileID: 1571031173}
+  m_winAnimation: {fileID: 0}
   m_state: 0
   m_playbackSpeedSlider: {fileID: 811767583218379410}
 --- !u!1 &782838694
@@ -10956,7 +10956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0bec23e0724701a7fe3361dcd05d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_transitionOutTime: 0.1
+  m_transitionOutTime: 0.5
   m_transitionInTime: 0.5
   m_objects:
   - {fileID: 1938220003}

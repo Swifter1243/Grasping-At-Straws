@@ -78,7 +78,7 @@ namespace SLC_GameJam_2025_1
                 StartCoroutine(Win());
                 return;
             }
-            
+
             PuzzleLayout puzzleToLoad = m_puzzles[m_currentPuzzleIndex++];
             onNewPuzzleLoaded?.Invoke(puzzleToLoad);
             m_currentPuzzle = Instantiate(puzzleToLoad, m_puzzleHolder);
@@ -92,7 +92,7 @@ namespace SLC_GameJam_2025_1
             m_uiLayouts.SetVisible("Transition UI");
             StartCoroutine(TransitionOut());
         }
-        
+
         private IEnumerator Win()
         {
             m_cameraSmoothing.m_acceptingInput = false;
@@ -147,7 +147,7 @@ namespace SLC_GameJam_2025_1
 
             while (true)
             {
-                m_transitionTime += Time.deltaTime / m_transitionInTime;
+                m_transitionTime += Time.deltaTime / m_transitionOutTime;
 
                 float timeInOutCubic = Easing.InOutCubic(m_transitionTime);
 
@@ -182,7 +182,7 @@ namespace SLC_GameJam_2025_1
         {
             if (layer == m_selectedLayer)
                 return;
-            
+
             onLayerChanged?.Invoke();
 
             m_selectedLayer = layer;
