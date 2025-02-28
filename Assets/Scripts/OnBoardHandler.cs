@@ -11,6 +11,7 @@ namespace SLC_GameJam_2025_1
         public GizmoHandler m_gizmoHandler;
         public CameraSmoothing m_cameraSmoothing;
         public ObjectVisibilityList m_uiLayouts;
+        public SceneInteraction m_sceneInteraction;
         public OnBoardingUI m_panning;
         public OnBoardingUI m_scrolling;
         public OnBoardingUI m_selectPieces;
@@ -38,6 +39,7 @@ namespace SLC_GameJam_2025_1
 
         private void SetupSelectPieces()
         {
+            m_sceneInteraction.m_interactionEnabled = true;
             UnityEvent onComplete = m_selectPieces.Setup();
             m_game.onPieceSelected += () => onComplete.Invoke();
             m_selectPieces.onFinished += SetupRotatePieces;

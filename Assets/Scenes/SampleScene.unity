@@ -5111,7 +5111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_fadeInDuration: 1
-  m_fadeOutDuration: 1
+  m_fadeOutDuration: 0.2
   m_stallDuration: 0.5
 --- !u!225 &249200367
 CanvasGroup:
@@ -5171,6 +5171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_game: {fileID: 727688844}
   m_gizmoHandler: {fileID: 782838696}
+  m_interactionEnabled: 1
 --- !u!1 &282302665 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7312746001490171607, guid: 06b972b2aeeb9fd4c8cb338034709f6f, type: 3}
@@ -10378,6 +10379,7 @@ MonoBehaviour:
   m_gizmoHandler: {fileID: 782838696}
   m_cameraSmoothing: {fileID: 963194229}
   m_uiLayouts: {fileID: 971066485}
+  m_sceneInteraction: {fileID: 272766269}
   m_panning: {fileID: 1333052739}
   m_scrolling: {fileID: 403326973}
   m_selectPieces: {fileID: 249200366}
@@ -10518,9 +10520,10 @@ MonoBehaviour:
   m_leakParticles: {fileID: 1885190514}
   m_cameraSmoothing: {fileID: 963194229}
   m_uiLayouts: {fileID: 971066485}
+  m_sceneInteraction: {fileID: 272766269}
   m_transitionInTime: 2
   m_transitionOutTime: 3
-  m_winAnimation: {fileID: 0}
+  m_winAnimation: {fileID: 1571031173}
   m_state: 0
   m_playbackSpeedSlider: {fileID: 811767583218379410}
 --- !u!1 &782838694
@@ -10696,9 +10699,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af7aa5223ad48b68e51374622624868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_fadeInDuration: 1
+  m_fadeInDuration: 0.4
   m_fadeOutDuration: 1
-  m_stallDuration: 0.5
+  m_stallDuration: 0
 --- !u!225 &819237075
 CanvasGroup:
   m_ObjectHideFlags: 0

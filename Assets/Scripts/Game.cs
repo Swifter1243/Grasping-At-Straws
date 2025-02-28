@@ -15,6 +15,7 @@ namespace SLC_GameJam_2025_1
         public ParticleSystem m_leakParticles;
         public CameraSmoothing m_cameraSmoothing;
         public ObjectVisibilityList m_uiLayouts;
+        public SceneInteraction m_sceneInteraction;
         public float m_transitionInTime = 1.5f;
         public float m_transitionOutTime = 1.5f;
         public event Action<PuzzleLayout> onNewPuzzleStarted;
@@ -283,6 +284,10 @@ namespace SLC_GameJam_2025_1
             m_selectedLayer = 0;
             onNewPuzzleStarted?.Invoke(m_currentPuzzle);
 
+            if (m_currentPuzzle.m_onBoardingType == OnBoardingType.BasicControls)
+            {
+                m_sceneInteraction.m_interactionEnabled = false;
+            }
             StartEditing();
             UpdateLayerView();
         }
