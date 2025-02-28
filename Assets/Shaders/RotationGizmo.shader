@@ -80,7 +80,7 @@
                 float viewAlignment = smoothstep(_HandleStart, 1, alignment);
 
                 float handleDist = abs(_HandleRadius - length(i.localPos.xz));
-                handleDist -= spike * _HandleArrowSize * 0.3 * (1 - _InUse);
+                handleDist -= spike * _HandleArrowSize * 0.3;
 
                 float handleCircle = 1 - step(_HandleWidth + _InUse * _HandleWidth, handleDist);
                 float handle = handleCircle * viewAlignment;
