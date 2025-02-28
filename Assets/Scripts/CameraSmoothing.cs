@@ -10,12 +10,12 @@ namespace SLC_GameJam_2025_1
         public float m_smoothRate = 1;
         public Vector2 m_lookSensitivity = new(500, 300);
         public float m_scrollSensitivity = 1;
+        public float m_distanceFactor = 1;
 
         public float m_targetDistance = 3;
         public Quaternion m_targetRotation = Quaternion.identity;
         public Vector3 m_targetPivot = Vector3.zero;
 
-        private float m_distanceFactor = 1;
         private float m_distance = 0;
         private Vector3 m_pivot = Vector3.zero;
         private Quaternion m_rotation = Quaternion.identity;
@@ -24,7 +24,7 @@ namespace SLC_GameJam_2025_1
         public event Action onRotationChanged;
 
         // https://www.gamedeveloper.com/programming/improved-lerp-smoothing-
-        private static float LerpSmooth(float target, float value, float dt, float rate)
+        public static float LerpSmooth(float target, float value, float dt, float rate)
         {
             return Mathf.Lerp(target, value, Mathf.Exp(-rate*dt));
         }
@@ -85,6 +85,11 @@ namespace SLC_GameJam_2025_1
         {
             m_targetDistance = bounds.GetMaxAxis() * 3.5f;
             m_targetPivot = bounds.center;
+        }
+
+        public bool ReachedDistanceTarget(float margin = 0.01f)
+        {
+            return Mathf.Abs(m_distance - m_targetDistance) < margin;
         }
     }
 }

@@ -92,15 +92,22 @@ namespace SLC_GameJam_2025_1
             m_uiLayouts.SetVisible("Transition UI");
             StartCoroutine(TransitionOut());
         }
-
+        
         private IEnumerator Win()
         {
             m_cameraSmoothing.m_acceptingInput = false;
             m_cameraSmoothing.m_targetPivot = Vector3.zero;
             m_cameraSmoothing.m_targetRotation = Quaternion.identity;
-            m_cameraSmoothing.m_targetDistance = 10;
-            
-            yield return new WaitForSeconds(3);
+            m_cameraSmoothing.m_targetDistance = 12;
+            m_cameraSmoothing.m_smoothRate = 6;
+
+            while (!m_cameraSmoothing.ReachedDistanceTarget() && Mathf.Abs(m_cameraSmoothing.m_distanceFactor - 1) > 0.01f)
+            {
+                m_cameraSmoothing.m_distanceFactor = CameraSmoothing.LerpSmooth(1, m_cameraSmoothing.m_distanceFactor, Time.deltaTime, 20);
+                yield return null;
+            }
+            m_cameraSmoothing.m_distanceFactor = 1;
+
             m_winAnimation.SetActive(true);
         }
 
