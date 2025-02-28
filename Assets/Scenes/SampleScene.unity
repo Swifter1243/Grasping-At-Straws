@@ -357,6 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754f7a7116764975b1d6a4f1ab015aa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_stallDuration: 0.5
   m_fadeInDuration: 0.7
   m_fadeOutDuration: 0.3
   m_levelNumber: {fileID: 2002263590}
@@ -11297,6 +11298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1286045589}
   - component: {fileID: 1286045590}
+  - component: {fileID: 1286045591}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -11343,6 +11345,18 @@ MonoBehaviour:
   m_continueButton: {fileID: 2090299804}
   m_restartButton: {fileID: 1927693990}
   m_exitButton: {fileID: 149364318}
+--- !u!225 &1286045591
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286045588}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1301599603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12311,7 +12325,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
