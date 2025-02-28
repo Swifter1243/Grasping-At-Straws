@@ -10790,6 +10790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_puzzles:
+  - {fileID: 8024967563669895984, guid: 3fe9bae549b0dce45919bb1ee8277f1d, type: 3}
   - {fileID: 8024967563669895984, guid: c4589765020b6c84ba096796ef784edd, type: 3}
   - {fileID: 8024967563669895984, guid: 09e9f6832d7ea1e49afaa6f0c2a7309e, type: 3}
   - {fileID: 8024967563669895984, guid: 61b839d28f50781408318918d55dd5a7, type: 3}
