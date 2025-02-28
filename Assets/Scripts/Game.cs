@@ -26,6 +26,7 @@ namespace SLC_GameJam_2025_1
         public AudioSource m_sfxSource;
         public AudioClip m_hoverSound;
         public AudioClip m_selectSound;
+        public AudioClip m_levelWinSound;
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
@@ -409,6 +410,7 @@ namespace SLC_GameJam_2025_1
 
         private void OnSolveSuccess()
         {
+            m_sfxSource.PlayOneShot(m_levelWinSound);
             m_state = State.ViewingResult;
             m_uiLayouts.SetVisible("Success UI");
         }

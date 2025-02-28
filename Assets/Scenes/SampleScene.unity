@@ -10816,6 +10816,7 @@ MonoBehaviour:
   m_sfxSource: {fileID: 415656050}
   m_hoverSound: {fileID: 8300000, guid: 95a6671d53227124e8d7f3d97c98d732, type: 3}
   m_selectSound: {fileID: 8300000, guid: a4e1936f9b5b45d4baf401ce5cb71145, type: 3}
+  m_levelWinSound: {fileID: 8300000, guid: 3efe9468a4bf8b84fa63670c18cacdbc, type: 3}
   m_state: 0
   m_playbackSpeedSlider: {fileID: 811767583218379410}
 --- !u!1 &782838694
