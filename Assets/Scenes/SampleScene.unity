@@ -10983,19 +10983,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1571031174}
+    m_TransformParent: {fileID: 1567173011}
     m_Modifications:
     - target: {fileID: 6303820526067878706, guid: d2da12c261ff4614ba20a9baae0dbce3, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.799162
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6303820526067878706, guid: d2da12c261ff4614ba20a9baae0dbce3, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.799162
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6303820526067878706, guid: d2da12c261ff4614ba20a9baae0dbce3, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.799162
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6303820526067878706, guid: d2da12c261ff4614ba20a9baae0dbce3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11003,11 +11003,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6303820526067878706, guid: d2da12c261ff4614ba20a9baae0dbce3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6303820526067878706, guid: d2da12c261ff4614ba20a9baae0dbce3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6303820526067878706, guid: d2da12c261ff4614ba20a9baae0dbce3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11019,11 +11019,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6303820526067878706, guid: d2da12c261ff4614ba20a9baae0dbce3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.5810188
+      value: 0.5810189
       objectReference: {fileID: 0}
     - target: {fileID: 6303820526067878706, guid: d2da12c261ff4614ba20a9baae0dbce3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.06312222
+      value: -0.06312224
       objectReference: {fileID: 0}
     - target: {fileID: 6303820526067878706, guid: d2da12c261ff4614ba20a9baae0dbce3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12048,7 +12048,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 16777215
   m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
