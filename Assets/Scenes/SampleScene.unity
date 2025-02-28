@@ -10863,6 +10863,8 @@ MonoBehaviour:
   m_xAxis: {fileID: 792354583}
   m_yAxis: {fileID: 925923093}
   m_zAxis: {fileID: 560839636}
+  m_sfxSource: {fileID: 415656050}
+  m_rotateSFX: {fileID: 8300000, guid: 2a9db93c80942ee47b2e36ca45cfbc0a, type: 3}
 --- !u!1001 &792354581
 PrefabInstance:
   m_ObjectHideFlags: 0

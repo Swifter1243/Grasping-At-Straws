@@ -9,10 +9,10 @@ namespace SLC_GameJam_2025_1
 		private static readonly int s_opacity = Shader.PropertyToID("_Opacity");
 		private static readonly int s_axisColor = Shader.PropertyToID("_AxisColor");
 		private static readonly int s_clickPosition = Shader.PropertyToID("_ClickPosition");
-		private float m_startAngle;
+		private float m_lastAngle;
 		private PuzzlePiece m_activePiece;
-		private Quaternion m_startRotation;
 		private Vector3 m_lastClickPosition;
+		public event Action onRotationMade;
 
 		public void Initialize(Color axisColor)
 		{
@@ -28,15 +28,20 @@ namespace SLC_GameJam_2025_1
 
 		public void SetInUse(Ray ray)
 		{
-			m_startRotation = m_activePiece.transform.rotation;
 			m_meshRenderer.material.SetInt(s_inUse, 1);
 			Vector2 clickPosition = GetClickPosition(ray) ?? Vector2.zero;
-			m_startAngle = GetAngleFromClickPosition(clickPosition);
+			m_lastAngle = GetAngleFromClickPosition(clickPosition);
 		}
 
 		private float GetAngleFromClickPosition(Vector2 clickPosition)
 		{
 			return Mathf.Atan2(clickPosition.y, clickPosition.x) * Mathf.Rad2Deg;
+		}
+
+		private float SnapAngleTo90(float angle)
+		{
+			float normalized = (angle + 360) % 360;
+			return Mathf.Round(normalized / 90f) * 90f;
 		}
 
 		private Vector2? GetClickPosition(Ray ray)
@@ -68,13 +73,23 @@ namespace SLC_GameJam_2025_1
 			m_lastClickPosition = clickPosition;
 			SetClickPosition(clickPosition);
 			float angle = GetAngleFromClickPosition(clickPosition);
-			float deltaAngle = angle - m_startAngle;
-			UpdateRotation(Mathf.Round(deltaAngle / 90) * 90);
+
+			float a = SnapAngleTo90(m_lastAngle);
+			float b = SnapAngleTo90(angle);
+
+			m_lastAngle = angle;
+			float deltaAngle = Mathf.DeltaAngle(a, b);
+
+			if (deltaAngle != 0)
+			{
+				UpdateRotation(deltaAngle);
+			}
 		}
 
-		private void UpdateRotation(float angle)
+		private void UpdateRotation(float deltaAngle)
 		{
-			m_activePiece.transform.rotation = Quaternion.AngleAxis(-angle, transform.up) * m_startRotation;
+			m_activePiece.transform.rotation = Quaternion.AngleAxis(-deltaAngle, transform.up) * m_activePiece.transform.rotation;
+			onRotationMade?.Invoke();
 		}
 
 		public void ResetVisuals()

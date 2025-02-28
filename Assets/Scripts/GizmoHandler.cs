@@ -9,6 +9,8 @@ namespace SLC_GameJam_2025_1
 		public RotationGizmo m_xAxis;
 		public RotationGizmo m_yAxis;
 		public RotationGizmo m_zAxis;
+		public AudioSource m_sfxSource;
+		public AudioClip m_rotateSFX;
 		public event Action onGizmoUsed;
 
 		private RotationGizmo m_inUseGizmo;
@@ -26,6 +28,14 @@ namespace SLC_GameJam_2025_1
 			m_xAxis.Initialize(Color.red);
 			m_yAxis.Initialize(Color.green);
 			m_zAxis.Initialize(Color.blue);
+			m_xAxis.onRotationMade += OnRotationMade;
+			m_yAxis.onRotationMade += OnRotationMade;
+			m_zAxis.onRotationMade += OnRotationMade;
+		}
+
+		private void OnRotationMade()
+		{
+			m_sfxSource.PlayOneShot(m_rotateSFX);
 		}
 
 		public void Make3D(bool is3D)
@@ -57,7 +67,7 @@ namespace SLC_GameJam_2025_1
 		{
 			if (!m_inUseGizmo)
 				return;
-			
+
 			onGizmoUsed?.Invoke();
 
 			foreach (RotationGizmo gizmo in GetRotationGizmos())
