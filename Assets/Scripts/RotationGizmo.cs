@@ -4,14 +4,15 @@ namespace SLC_GameJam_2025_1
 {
 	public class RotationGizmo : MonoBehaviour
 	{
+		public float m_rotationSensitivity = 0.4f;
 		public MeshRenderer m_meshRenderer;
 		private static readonly int s_inUse = Shader.PropertyToID("_InUse");
 		private static readonly int s_opacity = Shader.PropertyToID("_Opacity");
 		private static readonly int s_axisColor = Shader.PropertyToID("_AxisColor");
 		private static readonly int s_clickPosition = Shader.PropertyToID("_ClickPosition");
-		private float m_lastAngle;
 		private PuzzlePiece m_activePiece;
-		private Vector3 m_lastClickPosition;
+		private Vector2 m_startingClickPosition;
+		private float m_lastAngle;
 		public event Action onRotationMade;
 
 		public void Initialize(Color axisColor)
@@ -30,18 +31,18 @@ namespace SLC_GameJam_2025_1
 		{
 			m_meshRenderer.material.SetInt(s_inUse, 1);
 			Vector2 clickPosition = GetClickPosition(ray) ?? Vector2.zero;
-			m_lastAngle = GetAngleFromClickPosition(clickPosition);
+			m_startingClickPosition = clickPosition;
+			m_lastAngle = 0;
 		}
 
 		private float GetAngleFromClickPosition(Vector2 clickPosition)
 		{
-			return Mathf.Atan2(clickPosition.y, clickPosition.x) * Mathf.Rad2Deg;
+			return Mathf.Atan2(clickPosition.y, clickPosition.x);
 		}
 
 		private float SnapAngleTo90(float angle)
 		{
-			float normalized = (angle + 360) % 360;
-			return Mathf.Round(normalized / 90f) * 90f;
+			return Mathf.Floor(angle / 90f + 0.5f) * 90f;
 		}
 
 		private Vector2? GetClickPosition(Ray ray)
@@ -67,18 +68,29 @@ namespace SLC_GameJam_2025_1
 			m_meshRenderer.material.SetVector(s_clickPosition, vector);
 		}
 
+		private float Project(Vector2 a, Vector2 b)
+		{
+			return Vector2.Dot(a, b) / Vector2.Dot(b, b);
+		}
+
 		public void UpdateClickPosition(Ray ray)
 		{
-			Vector2 clickPosition = GetClickPosition(ray) ?? m_lastClickPosition;
-			m_lastClickPosition = clickPosition;
-			SetClickPosition(clickPosition);
-			float angle = GetAngleFromClickPosition(clickPosition);
+			Vector2 clickPosition = GetClickPosition(ray) ?? m_startingClickPosition;
+			Vector2 tangent = new(-m_startingClickPosition.y, m_startingClickPosition.x);
 
-			float a = SnapAngleTo90(m_lastAngle);
+			float signedDistance = Project(clickPosition - m_startingClickPosition, tangent);
+			float angle01 = signedDistance / m_rotationSensitivity;
+			float angle = angle01 * 90;
+
+			float a = m_lastAngle;
 			float b = SnapAngleTo90(angle);
+			m_lastAngle = b;
 
-			m_lastAngle = angle;
-			float deltaAngle = Mathf.DeltaAngle(a, b);
+			float deltaAngle = b - a;
+
+			const float HALF_PI = Mathf.PI * 0.5f;
+			float targetAngle = GetAngleFromClickPosition(m_startingClickPosition) + angle01 * HALF_PI;
+			SetClickPosition(new Vector2(Mathf.Cos(targetAngle), Mathf.Sin(targetAngle)));
 
 			if (deltaAngle != 0)
 			{

@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37625635646400ab0bd75a132a4e764, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_rotationSensitivity: 2
   m_meshRenderer: {fileID: 3198873505259711278}
 --- !u!1 &2827358074586059632
 GameObject:
