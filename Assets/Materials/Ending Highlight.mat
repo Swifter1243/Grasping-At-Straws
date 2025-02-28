@@ -30,7 +30,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Brightness: 6.13
-    - _Opacity: 1
+    - _Opacity: 0
     m_Colors:
     - _Color: {r: 1, g: 0.91222084, b: 0.740566, a: 1}
   m_BuildTextureStacks: []
