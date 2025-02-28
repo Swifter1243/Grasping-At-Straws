@@ -21,6 +21,7 @@ namespace SLC_GameJam_2025_1
         public event Action<PuzzleLayout> onNewPuzzleLoaded;
         public event Action onPieceSelected;
         public event Action onLayerChanged;
+        public GameObject m_winAnimation;
 
         private const float FOCUSED_OPACITY = 1;
         private const float UNFOCUSED_OPACITY = 0.2f;
@@ -74,7 +75,7 @@ namespace SLC_GameJam_2025_1
 
             if (m_currentPuzzleIndex >= m_puzzles.Count)
             {
-                Win();
+                StartCoroutine(Win());
                 return;
             }
             
@@ -92,9 +93,15 @@ namespace SLC_GameJam_2025_1
             StartCoroutine(TransitionOut());
         }
 
-        private void Win()
+        private IEnumerator Win()
         {
-            throw new NotImplementedException();
+            m_cameraSmoothing.m_acceptingInput = false;
+            m_cameraSmoothing.m_targetPivot = Vector3.zero;
+            m_cameraSmoothing.m_targetRotation = Quaternion.identity;
+            m_cameraSmoothing.m_targetDistance = 10;
+            
+            yield return new WaitForSeconds(3);
+            m_winAnimation.SetActive(true);
         }
 
         private IEnumerator TransitionIn()

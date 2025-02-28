@@ -10520,6 +10520,7 @@ MonoBehaviour:
   m_uiLayouts: {fileID: 971066485}
   m_transitionInTime: 2
   m_transitionOutTime: 3
+  m_winAnimation: {fileID: 1571031173}
   m_state: 0
   m_playbackSpeedSlider: {fileID: 811767583218379410}
 --- !u!1 &782838694
@@ -10893,11 +10894,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d49bed3df0a4549b11d196793d74d13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_acceptingInput: 1
   m_initialRotation: {x: 30, y: 30, z: 0}
   m_smoothRate: 10
   m_lookSensitivity: {x: 8, y: 8}
   m_scrollSensitivity: 0.1
   m_targetDistance: 3
+  m_targetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_targetPivot: {x: 0, y: 0, z: 0}
 --- !u!1 &971066483
 GameObject:
@@ -11639,7 +11642,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1571031174
 Transform:
   m_ObjectHideFlags: 0

@@ -5,13 +5,14 @@ namespace SLC_GameJam_2025_1
 {
     public class CameraSmoothing : MonoBehaviour
     {
+        public bool m_acceptingInput = true;
         public Vector3 m_initialRotation;
         public float m_smoothRate = 1;
         public Vector2 m_lookSensitivity = new(500, 300);
         public float m_scrollSensitivity = 1;
 
         public float m_targetDistance = 3;
-        private Quaternion m_targetRotation = Quaternion.identity;
+        public Quaternion m_targetRotation = Quaternion.identity;
         public Vector3 m_targetPivot = Vector3.zero;
 
         private float m_distanceFactor = 1;
@@ -51,6 +52,14 @@ namespace SLC_GameJam_2025_1
             transform.rotation = m_rotation;
             transform.position = m_pivot + back * m_distance;
 
+            if (m_acceptingInput)
+            {
+                HandleInput();
+            }
+        }
+
+        private void HandleInput()
+        {
             if (Input.mouseScrollDelta.y != 0)
             {
                 onDistanceChanged?.Invoke();
