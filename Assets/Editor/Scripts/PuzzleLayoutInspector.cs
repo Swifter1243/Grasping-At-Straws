@@ -14,7 +14,7 @@ namespace SLC_GameJam_2025_1
 		{
 			base.OnInspectorGUI();
 
-			PuzzleLayout layout = (PuzzleLayout)target;
+			PuzzleLayout layout = (PuzzleLayout) target;
 
 			if (GUILayout.Button("Randomize Piece Directions"))
 			{
@@ -28,9 +28,12 @@ namespace SLC_GameJam_2025_1
 		}
 		public void RandomizeAllPieceDirections(PuzzleLayout layout)
 		{
+
 			foreach (PuzzlePiece puzzlePiece in layout.GetComponentsInChildren<PuzzlePiece>())
 			{
-				puzzlePiece.transform.rotation = Quaternion.Euler(GetRandom90DegreeAngle(), GetRandom90DegreeAngle(), GetRandom90DegreeAngle());
+				puzzlePiece.transform.rotation = layout.Is3D ?
+					Quaternion.Euler(GetRandom90DegreeAngle(), GetRandom90DegreeAngle(), GetRandom90DegreeAngle()) :
+					Quaternion.Euler(0, GetRandom90DegreeAngle(), 0);
 			}
 
 			EditorUtility.SetDirty(this);

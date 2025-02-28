@@ -9,7 +9,6 @@ namespace SLC_GameJam_2025_1
 {
     public class PuzzleLayout : MonoBehaviour, IEnumerable<PuzzlePiece>
     {
-        public bool m_is3D = false;
         public Vector3Int m_dimensions;
         public PuzzleInput m_in;
         public PuzzleInput m_out;
@@ -36,6 +35,7 @@ namespace SLC_GameJam_2025_1
         private int Volume => m_dimensions.x * m_dimensions.y * m_dimensions.z;
         public Bounds BoundingBox => new(Vector3.zero, m_dimensions);
         public Vector3 Center => (m_dimensions - Vector3.one) / 2;
+        public bool Is3D => m_dimensions.y > 1;
 
         public Bounds GetBoundingBoxAtLayer(int layer)
         {
