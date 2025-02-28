@@ -62,8 +62,6 @@ namespace SLC_GameJam_2025_1
             m_playbackSpeedSlider.value = m_playbackSpeed;
             m_playbackSpeedSlider.onValueChanged.AddListener(UpdatePlaybackSpeed);
             m_gizmoHandler.Close();
-
-            NextLevel();
         }
 
         public void NextLevel()
@@ -80,6 +78,7 @@ namespace SLC_GameJam_2025_1
                 return;
             }
 
+            PlayerPrefs.SetInt("level", m_currentPuzzleIndex);
             PuzzleLayout puzzleToLoad = m_puzzles[m_currentPuzzleIndex++];
             onNewPuzzleLoaded?.Invoke(puzzleToLoad);
             m_currentPuzzle = Instantiate(puzzleToLoad, m_puzzleHolder);

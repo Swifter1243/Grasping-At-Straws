@@ -5,7 +5,7 @@ namespace SLC_GameJam_2025_1
 {
     public class CameraSmoothing : MonoBehaviour
     {
-        public bool m_acceptingInput = true;
+        public bool m_acceptingInput;
         public Vector3 m_initialRotation;
         public float m_smoothRate = 1;
         public Vector2 m_lookSensitivity = new(500, 300);
@@ -19,7 +19,7 @@ namespace SLC_GameJam_2025_1
         private float m_distance = 0;
         private Vector3 m_pivot = Vector3.zero;
         private Quaternion m_rotation = Quaternion.identity;
-        
+
         public event Action onDistanceChanged;
         public event Action onRotationChanged;
 
