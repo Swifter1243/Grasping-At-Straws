@@ -38,6 +38,8 @@ namespace SLC_GameJam_2025_1
 			{
 				puzzlePiece.transform.localPosition = Vector3Int.RoundToInt(puzzlePiece.transform.localPosition);
 			}
+
+			MarkSceneDirty();
 		}
 
 		private float GetRandom90DegreeAngle()
