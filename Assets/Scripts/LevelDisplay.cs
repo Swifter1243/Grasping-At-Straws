@@ -1,9 +1,12 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
+using UnityEngine;
 
 namespace SLC_GameJam_2025_1
 {
     public class LevelDisplay : Fadeable
     {
+        public float m_stallDuration = 0.5f;
         public float m_fadeInDuration = 1f;
         public float m_fadeOutDuration = 1f;
         public TextMeshProUGUI m_levelNumber;
@@ -21,7 +24,13 @@ namespace SLC_GameJam_2025_1
         {
             m_levelNumber.text = $"Level {m_game.m_currentPuzzleIndex}";
             m_levelText.text = puzzleLayout.name;
-            StartCoroutine(Fade(m_fadeInDuration, 0, 1));
+            StartCoroutine(TransitionIn());
+        }
+
+        private IEnumerator TransitionIn()
+        {
+            yield return new WaitForSeconds(m_stallDuration);
+            yield return Fade(m_fadeInDuration, 0, 1);
         }
     }
 }
